@@ -1,7 +1,10 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MainButton from './MainButton'
 import axios from 'axios'
+import { getCurrentDateTimeFormatted } from '../controller/controller'
+
+
 
 export default function ThreadPost() {
     const labelCss = 'flex items-center bg-labelBG text-light text-sm font-bold border border-labelBorder w-20'
@@ -11,13 +14,36 @@ export default function ThreadPost() {
     const [comment, setComment] = useState('')
     const [file, setFile] = useState('')
     const [fileData, setFileData] = useState({})
+    const [threadData, setThreadData] = useState({})
     const [canPost, setCanPost] = useState(true)
+    const [inputStatus, setInputStatus] = useState('')
+
+    useEffect(() => {
+        if (JSON.stringify(fileData) !== '{}') {
+            setThreadData({
+                name: name,
+                subject: subject,
+                comment: comment,
+                fileData: fileData,
+                created_at: getCurrentDateTimeFormatted(),
+                postNumber: 1,
+                replies: []
+            })
+        }
+    }, [fileData])
+
+    useEffect(() => {
+        if (JSON.stringify(threadData) !== '{}') {
+            console.log(threadData)
+        }
+    }, [threadData])
     
     function uploadImage() {
         if (!file) return
 
         const formData = new FormData()
         formData.append("file", file)
+        formData.append("folder", "111")
         formData.append("upload_preset", "yk5mb2bg")
 
         axios.post("https://api.cloudinary.com/v1_1/dpvihyj9b/image/upload", formData)
@@ -49,6 +75,7 @@ export default function ThreadPost() {
             setName("Anonymous")
         }
         setCanPost(false)
+        setInputStatus('Creating Thread...')
         uploadImage()
     }
 
@@ -68,9 +95,12 @@ export default function ThreadPost() {
         </div>
         <div className='flex flex-row'>
             <div className={labelCss}>File</div>
-            <input onChange={(e) => setFile(e.target.files[0])} className='w-60 text-light' type="file" />
+            <input onChange={(e) => setFile(e.target.files[0])} className='w-60 text-light' type="file" accept='image/*'/>
         </div>
         <MainButton click={uploadThread} text='Post'/>
+        {inputStatus &&
+        <div className='text-light font-bold'>{inputStatus}</div>
+        }
     </div>
   )
 }
