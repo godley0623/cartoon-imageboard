@@ -7,6 +7,8 @@ import { getCurrentDateTimeFormatted } from '../controller/controller'
 
 
 export default function ThreadPost() {
+    const serverUrl = 'http://localhost:4000/'
+
     const labelCss = 'flex items-center bg-labelBG text-light text-sm font-bold border border-labelBorder w-20'
 
     const [name, setName] = useState('')
@@ -15,6 +17,7 @@ export default function ThreadPost() {
     const [file, setFile] = useState('')
     const [fileData, setFileData] = useState({})
     const [threadData, setThreadData] = useState({})
+    const [postNumber, setPostNumber] = useState(0)
     const [canPost, setCanPost] = useState(true)
     const [inputStatus, setInputStatus] = useState('')
 
@@ -26,7 +29,7 @@ export default function ThreadPost() {
                 comment: comment,
                 fileData: fileData,
                 created_at: getCurrentDateTimeFormatted(),
-                postNumber: 1,
+                postNumber: postNumber,
                 replies: []
             })
         }
@@ -35,15 +38,17 @@ export default function ThreadPost() {
     useEffect(() => {
         if (JSON.stringify(threadData) !== '{}') {
             console.log(threadData)
+            axios.post(serverUrl + 'threads', threadData)
+            //Go To thread once created
         }
     }, [threadData])
     
-    function uploadImage() {
+    function uploadImage(postNumber) {
         if (!file) return
 
         const formData = new FormData()
         formData.append("file", file)
-        formData.append("folder", "111")
+        formData.append("folder", `${postNumber}`)
         formData.append("upload_preset", "yk5mb2bg")
 
         axios.post("https://api.cloudinary.com/v1_1/dpvihyj9b/image/upload", formData)
@@ -74,9 +79,15 @@ export default function ThreadPost() {
         if (!name) {
             setName("Anonymous")
         }
+
         setCanPost(false)
         setInputStatus('Creating Thread...')
-        uploadImage()
+        axios.get(serverUrl + 'postnumber')
+        .then((response) => {
+            setPostNumber(response.data[0].postNumber)
+            axios.put(serverUrl + 'postnumber/increase')
+            uploadImage(response.data[0].postNumber)
+        })
     }
 
   return (
