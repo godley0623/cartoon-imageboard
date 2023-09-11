@@ -1,10 +1,23 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import MainButton from "./components/MainButton"
 import ThreadPost from "./components/ThreadPost"
+import ThreadDisplay from "./components/ThreadDisplay"
+import axios from "axios"
 
 export default function Home() {
+  const serverUrl = 'http://localhost:4000/'
+
   const [postToggle, setPostToggle] = useState('')
+  const [threads, setThreads] = useState([])
+
+  useEffect(() => {
+    axios.get(serverUrl + 'threads')
+    .then(response => {
+      const data = response.data
+      setThreads(data)
+    })
+  }, [])
 
   function toggleForm() {
     if (postToggle) {
@@ -37,6 +50,18 @@ export default function Home() {
         <MainButton text='Bottom'/>
         <MainButton text='Refresh'/>
       </div>
+
+      <div className="w-full mt-6 flex flex-wrap gap-4 justify-center border-borderColor border-b-2 pb-10">
+        {threads.map((thread, key) => (
+          <ThreadDisplay key={key} thread={thread}/>
+        ))}
+      </div>
+
+      <div className="w-full flex justify-center border-borderColor border-b-2">
+        <MainButton text='Top'/>
+        <MainButton text='Refresh'/>
+      </div>
+
     </main>
   )
 }
