@@ -5,7 +5,7 @@ import axios from 'axios'
 import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
 
-export default function page() {
+export default function ThreadPage() {
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
     const router = useRouter()
 
