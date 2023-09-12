@@ -6,7 +6,7 @@ import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
 
 export default function page() {
-    const serverUrl = 'http://localhost:4000/'
+    const serverUrl = 'https://cartoonhub-server.vercel.app/'
     const router = useRouter()
 
     const params = useParams()

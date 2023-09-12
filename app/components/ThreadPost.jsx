@@ -7,7 +7,7 @@ import { getCurrentDateTimeFormatted } from '../controller/controller'
 
 
 export default function ThreadPost() {
-    const serverUrl = 'http://localhost:4000/'
+    const serverUrl = 'https://cartoonhub-server.vercel.app/'
 
     const labelCss = 'flex items-center bg-labelBG text-light text-sm font-bold border border-labelBorder w-20'
 

@@ -6,7 +6,7 @@ import ThreadDisplay from "./components/ThreadDisplay"
 import axios from "axios"
 
 export default function Home() {
-  const serverUrl = 'http://localhost:4000/'
+  const serverUrl = 'https://cartoonhub-server.vercel.app/'
 
   const [postToggle, setPostToggle] = useState('')
   const [threads, setThreads] = useState([])
