@@ -15,7 +15,10 @@ module.exports = {
       'buttonBorder': '#282a2e',
       'labelBG': '#282a2e',
       'labelBorder': '#111',
-      'inputBorder': '#aaa'
+      'inputBorder': '#aaa',
+      'nameColor': '#1e7c4a',
+      'replyBG': '#292c2f',
+      'black': '#000000',
     },
     fontFamily: {
       'tahoma': ['Tahoma', 'sans-serif'],
