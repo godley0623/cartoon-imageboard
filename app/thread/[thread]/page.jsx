@@ -1,12 +1,13 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation' 
+import { useParams, useRouter } from 'next/navigation' 
 import axios from 'axios'
 import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
 
 export default function page() {
     const serverUrl = 'http://localhost:4000/'
+    const router = useRouter()
 
     const params = useParams()
     const threadNum = Number(params.thread)
@@ -27,6 +28,10 @@ export default function page() {
       setPostToggle(!postToggle)
     }
 
+    function returnHome() {
+      router.push('/')
+    }
+
   return (
     <div>
       <div className='w-full flex flex-col items-center border-borderColor border-b-2'> 
@@ -35,7 +40,7 @@ export default function page() {
       </div>
 
       <div className='flex justify-center'>
-        <MainButton text='Return'/>
+        <MainButton click={returnHome} text='Return'/>
         <MainButton text='Bottom'/>
         <MainButton text='Update'/>
       </div>
