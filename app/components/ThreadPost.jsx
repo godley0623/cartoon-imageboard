@@ -33,7 +33,7 @@ export default function ThreadPost() {
                 replies: []
             })
         }
-    }, [fileData])
+    }, [fileData, name, comment, postNumber, subject])
 
     useEffect(() => {
         if (JSON.stringify(threadData) !== '{}') {
