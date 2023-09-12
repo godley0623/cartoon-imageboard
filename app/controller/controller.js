@@ -21,3 +21,13 @@ export function getCurrentDateTimeFormatted() {
 
   return formattedDate;
 }
+
+export function convertBytesToKBorMB(bytes) {
+  if (bytes < 1024 * 1024) {
+    // If bytes are less than 1MB, convert to KB
+    return (bytes / 1024).toFixed(2) + " KB";
+  } else {
+    // If bytes are 1MB or higher, convert to MB
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+}

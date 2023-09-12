@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { convertBytesToKBorMB } from '../controller/controller'
 
 export default function ReplyDisplay(props) {
     const reply = props.reply
     const op = props.op || false
+    const bytes = convertBytesToKBorMB(reply.fileData.bytes)
 
     const [imageEnlarge, setImageEnlarge] = useState(false)
 
@@ -24,9 +26,9 @@ export default function ReplyDisplay(props) {
         </div>
 
         {!imageEnlarge && <div className='flex gap-4 bg-replyBG border-b border-black'>
-            <div className='text-light text-xs text-center'>
+            <div className='text-light text-xxs text-center'>
                <div className='w-32'> <img onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> </div>
-                <p>{`File Size ${reply.fileData.format.toUpperCase()}`}</p>
+                <p>{`${bytes} ${reply.fileData.format.toUpperCase()}`}</p>
             </div>
             <div className='mt-2 text-sm'>
                 <p className='text-light'>{reply.comment}</p>
@@ -37,7 +39,7 @@ export default function ReplyDisplay(props) {
             <div className='text-light text-xs text-center'>
                <div className='pl-3 pr-3 pt-2 pb-1'> <img onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> </div>
                 <p>{`${reply.fileData.filename}.${reply.fileData.format}`}</p>
-                <p>file size</p>
+                <p>{bytes}</p>
             </div>
             <div className='mt-2 text-sm text-light pb-4 pl-4'>
                 <p>{reply.comment}</p>
