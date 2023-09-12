@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 export default function ReplyDisplay(props) {
     const reply = props.reply
+    const op = props.op || false
 
     const [imageEnlarge, setImageEnlarge] = useState(false)
 
@@ -12,7 +13,10 @@ export default function ReplyDisplay(props) {
   return (
     <div>
         <div className='flex gap-4 bg-black pl-2'>
-            <div className='pt-1 pb-1'> <p className='text-nameColor font-bold text-sm'>{reply.name}</p> </div>
+            <div className='pt-1 pb-1'> 
+                <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
+                {op && <p className='text-subjectColor font-bold text-sm'>{reply.subject}</p>}
+            </div>
             <div className='flex gap-2 text-light text-sm pt-1 pb-1'>
                 <p>{reply.created_at}</p>
                 <p>{`No. ${reply.postNumber}`}</p>

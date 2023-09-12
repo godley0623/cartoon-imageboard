@@ -17,6 +17,7 @@ module.exports = {
       'labelBorder': '#111',
       'inputBorder': '#aaa',
       'nameColor': '#1e7c4a',
+      'subjectColor': '#4537ff',
       'replyBG': '#292c2f',
       'black': '#000000',
     },

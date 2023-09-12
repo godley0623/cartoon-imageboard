@@ -24,7 +24,7 @@ export default function page() {
   return (
     <div>
       {JSON.stringify(thread) !== '{}' && 
-        <ReplyDisplay reply={thread}/>
+        <ReplyDisplay op={true} reply={thread}/>
       }
     </div>
   )
