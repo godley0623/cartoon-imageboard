@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Image from 'next/image'
 import { convertBytesToKBorMB } from '../controller/controller'
 
 export default function ReplyDisplay(props) {
@@ -27,7 +28,7 @@ export default function ReplyDisplay(props) {
 
         {!imageEnlarge && <div className='flex gap-4 bg-replyBG border-b border-black'>
             <div className='text-light text-xxs text-center'>
-               <div className='w-32'> <img onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> </div>
+               <div className='w-32'> <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> </div>
                 <p>{`${bytes} ${reply.fileData.format.toUpperCase()}`}</p>
             </div>
             <div className='mt-2 text-sm'>
@@ -37,7 +38,7 @@ export default function ReplyDisplay(props) {
 
         {imageEnlarge && <div className='flex flex-col gap-4 bg-replyBG border-b border-black'>
             <div className='text-light text-xs text-center'>
-               <div className='pl-3 pr-3 pt-2 pb-1'> <img onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> </div>
+               <div className='pl-3 pr-3 pt-2 pb-1'> <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> </div>
                 <p>{`${reply.fileData.filename}.${reply.fileData.format}`}</p>
                 <p>{bytes}</p>
             </div>
