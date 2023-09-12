@@ -35,7 +35,7 @@ export default function ThreadPage() {
   return (
     <div>
       <div className='w-full flex flex-col items-center border-borderColor border-b-2'> 
-        <h1 className='text-light text-3xl font-bold font-tahoma'>Cartoons & Comics</h1>
+        <h1 className='text-light text-3xl font-bold font-tahoma'>CartoonHub</h1>
         <p className="text-light">Discuss your favorite cartoon shows</p>
       </div>
 
