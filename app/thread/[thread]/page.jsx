@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios'
 import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
+import ReplyPost from '@/app/components/ReplyPost'
 
 export default function ThreadPage() {
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
@@ -50,10 +51,21 @@ export default function ThreadPage() {
       </div>}
       {postToggle &&<div className='flex justify-center mb-4 border-borderColor border-b-2'>
         <MainButton click={toggleForm} text='Close Post Form'/>
+        <ReplyPost closeForm={toggleForm} thread={thread}/>
       </div>}
 
       {JSON.stringify(thread) !== '{}' && 
-        <ReplyDisplay op={true} reply={thread}/>
+        <>
+          <ReplyDisplay op={true} reply={thread}/>
+          
+          <div>
+          {thread.replies.map((reply, key) => (
+            <div key={key} className='mt-2'>
+              <ReplyDisplay reply={reply}/>
+            </div>
+          ))}
+          </div>
+        </>
       }
     </div>
   )
