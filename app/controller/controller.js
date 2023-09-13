@@ -31,3 +31,54 @@ export function convertBytesToKBorMB(bytes) {
     return (bytes / (1024 * 1024)).toFixed(2) + " MB";
   }
 }
+
+export function sortThreadsByCreatedAt(threads) {
+  // Custom comparison function to sort threads by created_at
+  function compareCreatedAt(thread1, thread2) {
+    let createdAt1;
+    let createdAt2;
+    if (thread1.replies.length > 0) {
+      createdAt1 = parseCreatedAt(thread1.replies[thread1.replies.length -1].created_at)
+    } else {
+      createdAt1 = parseCreatedAt(thread1.created_at);
+    }
+
+    if (thread2.replies.length > 0) {
+      createdAt2 = parseCreatedAt(thread2.replies[thread2.replies.length -1].created_at)
+    } else {
+      createdAt2 = parseCreatedAt(thread2.created_at);
+    }
+
+    if (createdAt1 < createdAt2) {
+      return 1;
+    } else if (createdAt1 > createdAt2) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  // Helper function to parse created_at into a comparable format
+  function parseCreatedAt(createdAtStr) {
+    const parts = createdAtStr.match(/(\d{2})\/(\d{2})\/(\d{2})\((\w{3})\)(\d{2}:\d{2}:\d{2})/);
+
+    if (!parts) {
+      throw new Error('Invalid created_at format');
+    }
+
+    const year = `20${parts[3]}`;
+    const month = parts[1] - 1; // JavaScript months are 0-based
+    const day = parts[2];
+    const time = parts[5].split(':');
+    const hours = time[0];
+    const minutes = time[1];
+    const seconds = time[2];
+
+    return new Date(year, month, day, hours, minutes, seconds);
+  }
+
+  // Sort the threads using the custom comparison function
+  const sortedThreads = threads.slice().sort(compareCreatedAt);
+
+  return sortedThreads;
+}

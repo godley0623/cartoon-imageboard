@@ -3,10 +3,13 @@ import React, { useState, useEffect } from 'react'
 import MainButton from './MainButton'
 import axios from 'axios'
 import { getCurrentDateTimeFormatted } from '../controller/controller'
+import { useRouter } from 'next/navigation'
 
 
 
 export default function ThreadPost() {
+    const router = useRouter()
+
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
 
     const labelCss = 'flex items-center bg-labelBG text-light text-sm font-bold border border-labelBorder w-20'
@@ -32,6 +35,7 @@ export default function ThreadPost() {
                 postNumber: postNumber,
                 replies: []
             })
+            console.log('point 1')
         }
     }, [fileData, name, comment, postNumber, subject])
 
@@ -39,7 +43,9 @@ export default function ThreadPost() {
         if (JSON.stringify(threadData) !== '{}') {
             console.log(threadData)
             axios.post(serverUrl + 'threads', threadData)
-            //Go To thread once created
+            .then(() => {
+                router.push('/thread/' + postNumber)
+            })
         }
     }, [threadData])
     
@@ -68,8 +74,8 @@ export default function ThreadPost() {
 
     function uploadThread() {
         if (!canPost) return
-        if (!comment) {
-            alert("Please provide a comment")
+        if (!comment && !subject) {
+            alert("Please provide a comment or a subject")
             return
         }
         if (!file) {
@@ -98,7 +104,7 @@ export default function ThreadPost() {
         </div>
         <div className='flex flex-row'>
             <div className={labelCss}>Subject</div>
-            <input onChange={(e) => setSubject(e.target.value)} className='w-60 border border-inputBorder' type="text" />
+            <input onChange={(e) => setSubject(e.target.value)} className='w-60 text-xs border border-inputBorder' type="text" />
         </div>
         <div className='flex flex-row'>
             <div className={labelCss}>Comment</div>

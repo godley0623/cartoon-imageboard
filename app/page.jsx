@@ -4,6 +4,7 @@ import MainButton from "./components/MainButton"
 import ThreadPost from "./components/ThreadPost"
 import ThreadDisplay from "./components/ThreadDisplay"
 import axios from "axios"
+import { sortThreadsByCreatedAt } from "./controller/controller"
 
 export default function Home() {
   const serverUrl = 'https://cartoonhub-server.vercel.app/'
@@ -15,7 +16,8 @@ export default function Home() {
     axios.get(serverUrl + 'threads')
     .then(response => {
       const data = response.data
-      setThreads(data)
+      const threadsBumpOrder = sortThreadsByCreatedAt(data)
+      setThreads(threadsBumpOrder)
     })
   }, [])
 
