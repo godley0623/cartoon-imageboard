@@ -108,7 +108,7 @@ export default function ThreadPost() {
         </div>
         <div className='flex flex-row'>
             <div className={labelCss}>Comment</div>
-            <textarea onChange={(e) => setComment(e.target.value)} className='flex items-start w-60 h-20 border border-inputBorder text-xs' type='text'></textarea>
+            <textarea onChange={(e) => setComment(e.target.value)} className='flex items-start w-60 h-20 border border-inputBorder text-xs pl-1' type='text'></textarea>
         </div>
         <div className='flex flex-row'>
             <div className={labelCss}>File</div>
