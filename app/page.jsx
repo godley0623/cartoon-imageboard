@@ -29,6 +29,10 @@ export default function Home() {
     }
   }
 
+  function refreshPage() {
+    window.location.reload()
+  }
+
   return (
     <main>
       <div className='w-full flex flex-col items-center border-borderColor border-b-2'> 
@@ -50,7 +54,7 @@ export default function Home() {
 
       <div className="w-full flex justify-center border-borderColor border-b-2">
         <MainButton text='Bottom'/>
-        <MainButton text='Refresh'/>
+        <MainButton click={refreshPage} text='Refresh'/>
       </div>
 
       <div className="w-full mt-6 flex flex-wrap gap-4 justify-center border-borderColor border-b-2 pb-10">
@@ -61,7 +65,7 @@ export default function Home() {
 
       <div className="w-full flex justify-center border-borderColor border-b-2">
         <MainButton text='Top'/>
-        <MainButton text='Refresh'/>
+        <MainButton click={refreshPage} text='Refresh'/>
       </div>
 
     </main>
