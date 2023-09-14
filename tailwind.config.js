@@ -23,6 +23,8 @@ module.exports = {
      },
     colors: {
       'light': '#c5c8c6',
+      'quote': '#91aa5a',
+      'reply': '#dd5258',
       'borderColor': '#232528',
       'buttonGradient': '#252628',
       'buttonBG': '#1b1c1e',

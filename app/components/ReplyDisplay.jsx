@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { convertBytesToKBorMB } from '../controller/controller'
+import CommentRenderer from './CommentRenderer'
 
 export default function ReplyDisplay(props) {
     const reply = props.reply
@@ -14,6 +15,40 @@ export default function ReplyDisplay(props) {
 
     function enlargeImage() {
         setImageEnlarge(!imageEnlarge)
+    }
+
+    function textFormat() {
+        reply.comment.split('\n').map((line, index) => {
+        // Check if the line starts with ">"
+        const regex = /^>>(?:\s|[^>])*/g;
+        const replyMatches = line.match(regex);
+        
+        let isQuote;
+        if (!replyMatches) isQuote = line.trim().startsWith('>')
+        if (replyMatches) {
+            console.log('1')
+            // Define a class name for styling
+            const className = 'text-reply underline cursor-pointer';
+
+            return (
+                <p key={index}>
+                    {replyMatches.map((match, i) => (
+                        <span key={i} className={className}>
+                            {match}
+                        </span>
+                    ))}
+                    {line.substring(replyMatches.join('').length)}
+                </p>
+            );
+        }
+
+        // Define a class name for styling
+        const className = isQuote ? 'text-quote' : 'text-light'
+
+        return (
+            <p key={index} className={className}>{line}</p>
+        );
+        })
     }
 
   return (
@@ -35,7 +70,7 @@ export default function ReplyDisplay(props) {
                 <p>{`${bytes} ${reply.fileData.format.toUpperCase()}`}</p>
             </div>
             <div className='mt-2 text-sm'>
-                <p className='text-light'>{reply.comment}</p>
+                <CommentRenderer comment={reply.comment}/>
             </div>
         </div>}
 
@@ -50,15 +85,11 @@ export default function ReplyDisplay(props) {
                     </div>
                 </div>
             </div>
-            <div className='mt-2 text-sm text-light pb-4 pl-4'>
-                <p>{reply.comment}</p>
-            </div>
+            <CommentRenderer comment={reply.comment}/>
         </div>}
 
         {!bytes && <div className='flex gap-4 bg-replyBG border-b border-black'>
-            <div className='mt-2 text-sm pl-2 pb-2'>
-                <p className='text-light'>{reply.comment}</p>
-            </div>
+            <CommentRenderer comment={reply.comment}/>
         </div>}
 
         <div></div>
