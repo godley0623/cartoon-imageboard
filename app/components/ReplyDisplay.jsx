@@ -29,7 +29,7 @@ export default function ReplyDisplay(props) {
             </div>
         </div>
 
-        {!imageEnlarge && bytes && <div className='flex gap-4 bg-replyBG border-b border-black'>
+        {!imageEnlarge && bytes && <div className='flex gap-4 bg-replyBG border-b border-black pb-2'>
             <div className='text-light text-xxs text-center'>
                <div className='w-32 cursor-pointer pl-1 pr-1 pt-1 pb-1'> <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> </div>
                 <p>{`${bytes} ${reply.fileData.format.toUpperCase()}`}</p>
@@ -39,11 +39,16 @@ export default function ReplyDisplay(props) {
             </div>
         </div>}
 
-        {imageEnlarge && bytes && <div className='flex flex-col gap-4 bg-replyBG border-b border-black'>
+        {imageEnlarge && bytes && <div className=' pb-2flex flex-col gap-4 bg-replyBG border-b border-black'>
             <div className='text-light text-xs text-center'>
-               <div className='pl-3 pr-3 pt-2 pb-1 cursor-pointer'> <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> </div>
-                <p>{`${reply.fileData.filename}.${reply.fileData.format}`}</p>
-                <p>{bytes}</p>
+                <div className='w-fit pl-3 pr-3 pt-2 pb-1 cursor-pointer'>    
+                    <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> 
+
+                    <div className='w-full'>
+                        <p>{`${reply.fileData.filename}.${reply.fileData.format}`}</p>
+                        <p className='cursor-auto'>{bytes}</p>
+                    </div>
+                </div>
             </div>
             <div className='mt-2 text-sm text-light pb-4 pl-4'>
                 <p>{reply.comment}</p>
