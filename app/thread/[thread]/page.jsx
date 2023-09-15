@@ -43,7 +43,7 @@ export default function ThreadPage() {
 
       <div className='flex justify-center'>
         <MainButton click={returnHome} text='Return'/>
-        <MainButton text='Bottom'/>
+        <MainButton click={() => window.scrollTo(0, document.body.scrollHeight)} text='Bottom'/>
         <MainButton text='Update'/>
       </div>
 
@@ -68,6 +68,13 @@ export default function ThreadPage() {
           </div>
         </>
       }
+
+      <div className='flex justify-center border-borderColor border-t-2 mt-3'>
+        <MainButton click={returnHome} text='Return'/>
+        <MainButton click={() => window.scrollTo(0, 0)} text='Top'/>
+        <MainButton text='Update'/>
+      </div>
+
     </div>
   )
 }
