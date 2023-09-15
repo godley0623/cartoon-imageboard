@@ -53,7 +53,7 @@ export default function Home() {
       </div>
 
       <div className="w-full flex justify-center border-borderColor border-b-2">
-        <MainButton text='Bottom'/>
+      <MainButton click={() => window.scrollTo(0, document.body.scrollHeight)} text='Bottom'/>
         <MainButton click={refreshPage} text='Refresh'/>
       </div>
 
@@ -64,7 +64,7 @@ export default function Home() {
       </div>
 
       <div className="w-full flex justify-center border-borderColor border-b-2">
-        <MainButton text='Top'/>
+      <MainButton click={() => window.scrollTo(0, 0)} text='Top'/>
         <MainButton click={refreshPage} text='Refresh'/>
       </div>
 
