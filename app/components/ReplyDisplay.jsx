@@ -25,7 +25,7 @@ export default function ReplyDisplay(props) {
     }
 
   return (
-    <div>
+    <div className='ml-3 mr-3'>
         <div className='flex gap-4 bg-black pl-2'>
             <div className='pt-1 pb-1'> 
                 <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
