@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import MainButton from './MainButton'
 import axios from 'axios'
 import { getCurrentDateTimeFormatted } from '../controller/controller'
@@ -11,10 +11,19 @@ export default function ReplyPost(props) {
     const [comment, setComment] = useState("")
     const [file, setFile] = useState("")
     const [fileData, setFileData] = useState({})
-    const [replyData, setReplyData] = useState({})
     const [postNumber, setPostNumber] = useState(0)
     const [canPost, setCanPost] = useState(true)
     const [postReady, setPostReady] = useState(false)
+
+    const commentRef = useRef(null)
+
+    useEffect(() => {
+        if (!props.replies) return
+
+        commentRef.current.value = comment + props.replies
+        setComment(comment + props.replies)
+        props.setReplies('')
+    }, [props.replies])
 
     useEffect(() => {
         if (postReady) {
@@ -70,6 +79,11 @@ export default function ReplyPost(props) {
         })
     }
 
+    function handleComment(e) {
+        setComment(e.target.value)
+        console.log(comment)
+    }
+
   return (
     <div className='border border-light w-80 fixed top-1 flex flex-col items-center bg-borderColor'>
 
@@ -85,7 +99,7 @@ export default function ReplyPost(props) {
         </div>
 
         <div className='text-sm'>
-            <textarea onChange={(e) => setComment(e.target.value)} className='w-60 h-24 pl-1 text-xs'></textarea>
+            <textarea ref={commentRef} onChange={(e) => handleComment(e)} className='w-60 h-24 pl-1 text-xs'></textarea>
         </div>
 
         <div className='text-light text-xs w-60'>

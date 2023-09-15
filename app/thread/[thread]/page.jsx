@@ -15,6 +15,7 @@ export default function ThreadPage() {
 
     const [thread, setThread] = useState({})
     const [postToggle, setPostToggle] = useState(false)
+    const [replies, setReplies] = useState("")
 
     useEffect(() => {
       axios.get(`${serverUrl}threads/${threadNum}`)
@@ -51,17 +52,17 @@ export default function ThreadPage() {
       </div>}
       {postToggle &&<div className='flex justify-center mb-4 border-borderColor border-b-2'>
         <MainButton click={toggleForm} text='Close Post Form'/>
-        <ReplyPost closeForm={toggleForm} thread={thread}/>
+        <ReplyPost replies={replies} setReplies={setReplies} closeForm={toggleForm} thread={thread}/>
       </div>}
 
       {JSON.stringify(thread) !== '{}' && 
         <>
-          <ReplyDisplay op={true} reply={thread}/>
+          <ReplyDisplay postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread}/>
           
           <div>
           {thread.replies.map((reply, key) => (
             <div key={key} className='mt-2'>
-              <ReplyDisplay reply={reply}/>
+              <ReplyDisplay postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply}/>
             </div>
           ))}
           </div>

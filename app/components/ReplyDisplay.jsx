@@ -17,38 +17,11 @@ export default function ReplyDisplay(props) {
         setImageEnlarge(!imageEnlarge)
     }
 
-    function textFormat() {
-        reply.comment.split('\n').map((line, index) => {
-        // Check if the line starts with ">"
-        const regex = /^>>(?:\s|[^>])*/g;
-        const replyMatches = line.match(regex);
-        
-        let isQuote;
-        if (!replyMatches) isQuote = line.trim().startsWith('>')
-        if (replyMatches) {
-            console.log('1')
-            // Define a class name for styling
-            const className = 'text-reply underline cursor-pointer';
+    function addPostNumToReply() {
+        const postForm = props.postToggle
+        if (!postForm) props.setPostToggle(!postForm)
 
-            return (
-                <p key={index}>
-                    {replyMatches.map((match, i) => (
-                        <span key={i} className={className}>
-                            {match}
-                        </span>
-                    ))}
-                    {line.substring(replyMatches.join('').length)}
-                </p>
-            );
-        }
-
-        // Define a class name for styling
-        const className = isQuote ? 'text-quote' : 'text-light'
-
-        return (
-            <p key={index} className={className}>{line}</p>
-        );
-        })
+        props.setReplies(`>>${reply.postNumber}\n`)
     }
 
   return (
@@ -60,7 +33,7 @@ export default function ReplyDisplay(props) {
             </div>
             <div className='flex gap-2 text-light text-sm pt-1 pb-1'>
                 <p>{reply.created_at}</p>
-                <p>{`No. ${reply.postNumber}`}</p>
+                <p>{`No. `}<span onClick={addPostNumToReply} className='cursor-pointer'>{`${reply.postNumber}`}</span></p>
             </div>
         </div>
 
