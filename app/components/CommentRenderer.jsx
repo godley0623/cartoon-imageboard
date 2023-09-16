@@ -30,11 +30,15 @@ function CommentRenderer({ comment }) {
         // Define a class name for styling
         const className = isQuote ? 'text-quote' : 'text-light';
 
-        return (
-          <p key={index} className={className}>
+        if (line) {
+          return (
+            <p key={index} className={className}>
             {line}
-          </p>
-        );
+            </p>
+          )
+        } else {
+          return (<br/>)
+        }
       })}
     </div>
   );
