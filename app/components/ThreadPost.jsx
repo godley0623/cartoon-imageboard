@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 
 
-export default function ThreadPost() {
+export default function ThreadPost(props) {
     const router = useRouter()
 
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
@@ -42,6 +42,7 @@ export default function ThreadPost() {
     useEffect(() => {
         if (JSON.stringify(threadData) !== '{}') {
             console.log(threadData)
+            props.deleteLastThread()
             axios.post(serverUrl + 'threads', threadData)
             .then(() => {
                 router.push('/thread/' + postNumber)

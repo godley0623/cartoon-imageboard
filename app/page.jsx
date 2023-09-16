@@ -4,10 +4,11 @@ import MainButton from "./components/MainButton"
 import ThreadPost from "./components/ThreadPost"
 import ThreadDisplay from "./components/ThreadDisplay"
 import axios from "axios"
-import { sortThreadsByCreatedAt } from "./controller/controller"
+import { sortThreadsByCreatedAt, deleteThread } from "./controller/controller"
 
 export default function Home() {
   const serverUrl = 'https://cartoonhub-server.vercel.app/'
+  const maxThreads = 20
 
   const [postToggle, setPostToggle] = useState('')
   const [threads, setThreads] = useState([])
@@ -20,6 +21,21 @@ export default function Home() {
       setThreads(threadsBumpOrder)
     })
   }, [])
+
+  function deleteLastThread() {
+    if (threads.length < maxThreads) return
+
+    axios.get(serverUrl + 'threads')
+    .then(response => {
+      const data = response.data
+      const threadsBumpOrder = sortThreadsByCreatedAt(data)
+      const lastThread = threadsBumpOrder[threadsBumpOrder.length - 1]
+      const lastThreadPostNum = lastThread.postNumber
+
+      deleteThread(lastThreadPostNum)
+    })
+
+  }
 
   function toggleForm() {
     if (postToggle) {
@@ -47,7 +63,7 @@ export default function Home() {
         {postToggle &&
         <div className="flex flex-col items-center">
           <MainButton click={toggleForm} text='Close Post Form'/>
-          <ThreadPost />
+          <ThreadPost deleteLastThread={deleteLastThread}/>
         </div>
         }
       </div>

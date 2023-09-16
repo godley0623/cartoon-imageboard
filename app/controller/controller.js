@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export function getCurrentDateTimeFormatted() {
   const currentDate = new Date();
 
@@ -81,4 +83,10 @@ export function sortThreadsByCreatedAt(threads) {
   const sortedThreads = threads.slice().sort(compareCreatedAt);
 
   return sortedThreads;
+}
+
+export function deleteThread(postNum) {
+  const url = `https://cartoon-imageboard-server.vercel.app/threads/${postNum}`
+
+  axios.delete(url)
 }
