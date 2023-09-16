@@ -26,15 +26,16 @@ export default function ReplyDisplay(props) {
 
   return (
     <div className='ml-3 mr-3'>
-        <div className='flex gap-4 bg-black pl-2'>
-            <div className='pt-1 pb-1'> 
+        <div className='flex flex-col bg-black pl-2'>
+            <div className='flex items-center gap-1'> 
                 <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
-                {op && <p className='text-subjectColor font-bold text-sm'>{reply.subject}</p>}
+
+                <div className='flex gap-2 text-light text-sm pt-1 pb-1'>
+                    <p>{reply.created_at}</p>
+                    <p>{`No. `}<span onClick={addPostNumToReply} className='cursor-pointer'>{`${reply.postNumber}`}</span></p>
+                </div>
             </div>
-            <div className='flex gap-2 text-light text-sm pt-1 pb-1'>
-                <p>{reply.created_at}</p>
-                <p>{`No. `}<span onClick={addPostNumToReply} className='cursor-pointer'>{`${reply.postNumber}`}</span></p>
-            </div>
+            {op && <p className='text-subjectColor font-bold text-sm'>{reply.subject}</p>}
         </div>
 
         {!imageEnlarge && bytes && <div className='flex flex-col bg-replyBG border-b border-black pb-2'>
@@ -48,7 +49,7 @@ export default function ReplyDisplay(props) {
                </div>
             </div>
 
-            <div className='mt-2 text-sm'>
+            <div className='text-sm'>
                 <CommentRenderer comment={reply.comment}/>
             </div>
         </div>}

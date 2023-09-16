@@ -2,7 +2,7 @@ import React from 'react';
 
 function CommentRenderer({ comment }) {
   return (
-    <div className='mt-2 text-sm pl-2 pb-2'>
+    <div className='text-sm pl-2 pb-2'>
       {comment.split('\n').map((line, index) => {
         // Check if the line starts with ">"
         const regex = /^>>(?:\s|[^>])*/g;
