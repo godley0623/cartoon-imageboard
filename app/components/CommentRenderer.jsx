@@ -37,7 +37,7 @@ function CommentRenderer({ comment }) {
             </p>
           )
         } else {
-          return (<br/>)
+          return (<br key={index}/>)
         }
       })}
     </div>

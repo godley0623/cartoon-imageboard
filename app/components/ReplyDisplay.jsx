@@ -68,7 +68,7 @@ export default function ReplyDisplay(props) {
             <CommentRenderer comment={reply.comment}/>
         </div>}
 
-        {!bytes && <div className='flex gap-4 bg-replyBG border-b border-black'>
+        {!bytes && <div className='pt-2 flex gap-4 bg-replyBG border-b border-black'>
             <CommentRenderer comment={reply.comment}/>
         </div>}
 
