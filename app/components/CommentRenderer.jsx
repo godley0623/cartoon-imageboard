@@ -54,7 +54,7 @@ function CommentRenderer({ comment }) {
   }
 
   return (
-    <div className='text-sm pl-2 pb-1'>
+    <div className='text-sm pl-2 pr-2 pb-1'>
       {comment.split('\n').map((line, index) => {
         if (line) {
           return(formatReply(line, index))
