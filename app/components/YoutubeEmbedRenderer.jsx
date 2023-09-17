@@ -19,23 +19,19 @@ export default function YoutubeEmbedRenderer(props) {
   }
 
   return (
-    <div className='text-link cursor-pointer underline' key={`link-${props.index}`}>
+    <span className='text-link cursor-pointer underline' key={`link-${props.index}`}>
         {!embedState && 
-            <div className=''>
-              <p onClick={() => goToYoutube(props.link)}>{props.link}<span onClick={(e) => { e.stopPropagation(); setEmbedState(!embedState); }}>{' [open embed]'}</span></p>
-            </div>
+              <span onClick={() => goToYoutube(props.link)}>{props.link}<span onClick={(e) => { e.stopPropagation(); setEmbedState(!embedState); }}>{' [open embed]'}</span></span>
         }
         {embedState &&
             <>
-              <div className=''>
-              <p onClick={() => goToYoutube(props.link)}>{props.link}<span onClick={(e) => { e.stopPropagation(); setEmbedState(!embedState); }}>{' [remove embed]'}</span></p>
-              </div>
+              <span onClick={() => goToYoutube(props.link)}>{props.link}<span onClick={(e) => { e.stopPropagation(); setEmbedState(!embedState); }}>{' [remove embed]'}</span></span>
 
               <iframe className='w-full' width="420" height="315"
                 src={`https://www.youtube.com/embed/${vidId}`} allowFullScreen>
               </iframe>
             </>
         }
-    </div>
+    </span>
   )
 }

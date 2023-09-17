@@ -12,9 +12,9 @@ function CommentRenderer({ comment }) {
 
     function combineNormalWords(index, key) {
       if (normalWords.length > 0) {
-        const combinedWord = normalWords.join(' ')
+        const combinedWord = normalWords.join(' ') + " "
         finalLine.push(
-          <p key={`normal-${index}-${key}`} className={normalClassName}>{combinedWord}</p>
+          <span key={`normal-${index}-${key}`} className={normalClassName}>{combinedWord}</span>
         )
         normalWords = []
       }
@@ -31,7 +31,7 @@ function CommentRenderer({ comment }) {
         combineNormalWords(index, key)
 
         finalLine.push(
-          <p key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word}</p>
+          <span key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word + " "}</span>
         )
       }
 
@@ -53,9 +53,11 @@ function CommentRenderer({ comment }) {
     combineNormalWords(index, '')
 
     return (
-      <div key={index} className='flex gap-1.5'>
-        {finalLine.map(el => el)}
-      </div>
+      <p key={index}>
+        {finalLine.map((el) => (
+          <>{el}</>
+        ))}
+      </p>
     )
   }
 
@@ -63,11 +65,12 @@ function CommentRenderer({ comment }) {
     <div className='text-sm pl-2 pr-2 pb-1'>
       {comment.split('\n').map((line, index) => {
         if (line) {
-          return(formatReply(line, index))
-        } 
-        else if (index !== comment.split('\n').length-1) {
-          return <br key={`break-${index}`}/>
+          return formatReply(line, index);
+        } else if (index !== comment.split('\n').length - 1) {
+          return <br key={`break-${index}`} />;
         }
+
+        return null;
       })}
     </div>
   );
