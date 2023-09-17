@@ -21,16 +21,14 @@ export default function YoutubeEmbedRenderer(props) {
   return (
     <div className='text-link cursor-pointer underline' key={`link-${props.index}`}>
         {!embedState && 
-            <div className='flex gap-1.5'>
-              <p onClick={() => goToYoutube(props.link)}>{props.link}</p>
-              <span onClick={() => setEmbedState(!embedState)}>{' (open embed)'}</span>
+            <div className=''>
+              <p onClick={() => goToYoutube(props.link)}>{props.link}<span onClick={(e) => { e.stopPropagation(); setEmbedState(!embedState); }}>{' [open embed]'}</span></p>
             </div>
         }
         {embedState &&
             <>
-              <div className='flex gap-1.5'>
-                <p onClick={() => goToYoutube(props.link)}>{props.link}</p>
-                <span onClick={() => setEmbedState(!embedState)}>{' (remove embed)'}</span>
+              <div className=''>
+              <p onClick={() => goToYoutube(props.link)}>{props.link}<span onClick={(e) => { e.stopPropagation(); setEmbedState(!embedState); }}>{' [remove embed]'}</span></p>
               </div>
 
               <iframe className='w-full' width="420" height="315"
