@@ -30,7 +30,7 @@ export default function YoutubeEmbedRenderer(props) {
             <>
               <div className='flex gap-1.5'>
                 <p onClick={() => goToYoutube(props.link)}>{props.link}</p>
-                <span onClick={() => setEmbedState(!embedState)}>{' (close embed)'}</span>
+                <span onClick={() => setEmbedState(!embedState)}>{' (remove embed)'}</span>
               </div>
 
               <iframe className='w-full' width="420" height="315"
