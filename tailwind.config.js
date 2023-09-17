@@ -25,6 +25,7 @@ module.exports = {
       'light': '#c5c8c6',
       'quote': '#91aa5a',
       'reply': '#5f89ac',
+      'link': '#ADD8E6',
       'borderColor': '#232528',
       'buttonGradient': '#252628',
       'buttonBG': '#1b1c1e',

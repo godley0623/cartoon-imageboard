@@ -1,4 +1,5 @@
 import React from 'react';
+import YoutubeEmbedRenderer from './YoutubeEmbedRenderer';
 
 function CommentRenderer({ comment }) {
   
@@ -7,7 +8,7 @@ function CommentRenderer({ comment }) {
     let normalWords = []
     const replyArrowClassName = 'text-reply underline cursor-pointer'
     const quoteClassName = 'text-quote'
-    const normalClassName = 'text-light'
+    const normalClassName = 'text-light h-fit'
 
     function combineNormalWords(index, key) {
       if (normalWords.length > 0) {
@@ -32,7 +33,13 @@ function CommentRenderer({ comment }) {
         finalLine.push(
           <p key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word}</p>
         )
-      } 
+      }
+
+      else if (word.startsWith('https://www.youtube.com') || word.startsWith('https://youtu.be/')) {
+        combineNormalWords(index, key)
+
+        finalLine.push(<YoutubeEmbedRenderer key={`youtube-${index}-${key}`} index={index} link={word}/>)
+      }
       
       else if (word === '' && key !== line.split(' ').length - 1) {
         finalLine.push(<br key={`break-${index}-${key}`}/>)
@@ -50,7 +57,6 @@ function CommentRenderer({ comment }) {
         {finalLine.map(el => el)}
       </div>
     )
-
   }
 
   return (
@@ -60,7 +66,7 @@ function CommentRenderer({ comment }) {
           return(formatReply(line, index))
         } 
         else if (index !== comment.split('\n').length-1) {
-          return <br key={index}/>
+          return <br key={`break-${index}`}/>
         }
       })}
     </div>
