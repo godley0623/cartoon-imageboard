@@ -69,7 +69,7 @@ export default function ThreadPage() {
         </>
       }
 
-      <div className='flex justify-center border-borderColor border-t-2 mt-3'>
+      <div className='flex justify-center border-borderColor border-t-2 mt-3 pt-3 pb-4'>
         <MainButton click={returnHome} text='Return'/>
         <MainButton click={() => window.scrollTo(0, 0)} text='Top'/>
         <MainButton text='Update'/>

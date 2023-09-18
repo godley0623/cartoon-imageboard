@@ -25,7 +25,7 @@ export default function ReplyDisplay(props) {
     }
 
   return (
-    <div className='ml-3 mr-3 laptop:w-fit'>
+    <div className='ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit'>
         <div className='flex flex-col bg-black pl-2 pr-2'>
             <div className='flex items-center gap-1'> 
                 <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
