@@ -1,7 +1,7 @@
 import React from 'react';
 import YoutubeEmbedRenderer from './YoutubeEmbedRenderer';
 
-function CommentRenderer({ comment }) {
+function CommentRenderer({ comment, setHighlight }) {
   
   function formatReply(line, index) {
     const finalLine = []
@@ -9,6 +9,13 @@ function CommentRenderer({ comment }) {
     const replyArrowClassName = 'text-reply underline cursor-pointer'
     const quoteClassName = 'text-quote'
     const normalClassName = 'text-light h-fit'
+
+    function goToReply(e) {
+      const postNum = e.target.innerText.split('>>')[1]
+      const elementToScrollTo = document.getElementById(postNum)
+      elementToScrollTo.scrollIntoView({ behavior: 'auto' });
+      setHighlight(Number(postNum))
+    }
 
     function combineNormalWords(index, key) {
       if (normalWords.length > 0) {
@@ -31,7 +38,7 @@ function CommentRenderer({ comment }) {
         combineNormalWords(index, key)
 
         finalLine.push(
-          <span key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word + " "}</span>
+          <span onClick={(e) => goToReply(e)} key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word + " "}</span>
         )
       }
 

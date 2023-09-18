@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { convertBytesToKBorMB } from '../controller/controller'
 import CommentRenderer from './CommentRenderer'
@@ -12,6 +12,15 @@ export default function ReplyDisplay(props) {
     }
 
     const [imageEnlarge, setImageEnlarge] = useState(false)
+    const [isHighlighted, setIsHighlighted] = useState('') 
+
+    useEffect(() => {
+        if (props.highlight === reply.postNumber) {
+            setIsHighlighted('H')
+        } else {
+            setIsHighlighted('')
+        }
+    }, [props.highlight])
 
     function enlargeImage() {
         setImageEnlarge(!imageEnlarge)
@@ -29,7 +38,7 @@ export default function ReplyDisplay(props) {
     }
 
   return (
-    <div className='ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit'>
+    <div id={reply.postNumber} className='border border-bllack ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit'>
         <div className='flex flex-col bg-black pl-2 pr-2'>
             <div className='flex items-center gap-1'> 
                 <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
@@ -42,7 +51,7 @@ export default function ReplyDisplay(props) {
             {op && <p className='text-subjectColor font-bold text-sm'>{reply.subject}</p>}
         </div>
 
-        {!imageEnlarge && bytes && <div className='flex flex-col bg-replyBG border-b border-black pb-2'>
+        {!imageEnlarge && bytes && <div className={`flex flex-col bg-replyBG${isHighlighted} pb-2`}>
             <div className='text-light text-xxs text-center h-fit'>
                <div className='w-44 cursor-pointer pl-1 pr-1 pt-1 pb-1'>   
                     <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> 
@@ -54,11 +63,11 @@ export default function ReplyDisplay(props) {
             </div>
 
             <div className='text-sm'>
-                <CommentRenderer comment={reply.comment}/>
+                <CommentRenderer setHighlight={props.setHighlight} comment={reply.comment}/>
             </div>
         </div>}
 
-        {imageEnlarge && bytes && <div className=' pb-2flex flex-col gap-4 bg-replyBG border-b border-black'>
+        {imageEnlarge && bytes && <div className={` pb-2flex flex-col gap-4 bg-replyBG${isHighlighted}`}>
             <div className='text-light text-xs text-center'>
                 <div className='w-fit pl-3 pr-3 pt-2 pb-1 cursor-pointer'>    
                     <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> 
@@ -69,11 +78,11 @@ export default function ReplyDisplay(props) {
                     </div>
                 </div>
             </div>
-            <CommentRenderer comment={reply.comment}/>
+            <CommentRenderer setHighlight={props.setHighlight} comment={reply.comment}/>
         </div>}
 
-        {!bytes && <div className='pt-2 flex gap-4 bg-replyBG border-b border-black'>
-            <CommentRenderer comment={reply.comment}/>
+        {!bytes && <div className={`pt-2 flex gap-4 bg-replyBG${isHighlighted}`}>
+            <CommentRenderer setHighlight={props.setHighlight} comment={reply.comment}/>
         </div>}
 
         <div></div>

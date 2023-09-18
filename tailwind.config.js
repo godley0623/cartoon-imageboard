@@ -37,6 +37,7 @@ module.exports = {
       'nameColor': '#1e7c4a',
       'subjectColor': '#4537ff',
       'replyBG': '#292c2f',
+      'replyBGH': '#1d1d21',
       'black': '#000000',
     },
     fontFamily: {

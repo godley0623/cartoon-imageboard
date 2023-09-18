@@ -16,6 +16,7 @@ export default function ThreadPage() {
     const [thread, setThread] = useState({})
     const [postToggle, setPostToggle] = useState(false)
     const [replies, setReplies] = useState("")
+    const [highlight, setHighlight] = useState(0)
 
     useEffect(() => {
       axios.get(`${serverUrl}threads/${threadNum}`)
@@ -57,12 +58,12 @@ export default function ThreadPage() {
 
       {JSON.stringify(thread) !== '{}' && 
         <>
-          <ReplyDisplay postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread}/>
+          <ReplyDisplay highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread}/>
           
           <div>
           {thread.replies.map((reply, key) => (
             <div key={key} className='mt-2'>
-              <ReplyDisplay postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply}/>
+              <ReplyDisplay highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply}/>
             </div>
           ))}
           </div>
