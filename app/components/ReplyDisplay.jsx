@@ -24,6 +24,10 @@ export default function ReplyDisplay(props) {
         props.setReplies(`>>${reply.postNumber}\n`)
     }
 
+    function goToImage() {
+        window.open(reply.fileData.url, '_blank')
+    }
+
   return (
     <div className='ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit'>
         <div className='flex flex-col bg-black pl-2 pr-2'>
@@ -60,8 +64,8 @@ export default function ReplyDisplay(props) {
                     <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> 
 
                     <div className='w-full'>
-                        <p>{`${reply.fileData.filename}.${reply.fileData.format}`}</p>
-                        <p className='cursor-auto'>{bytes}</p>
+                        <p onClick={goToImage} className='text-link underline cursor-pointer'>{`${reply.fileData.filename}.${reply.fileData.format}`}</p>
+                        <p className='cursor-auto'>{`${bytes} (${reply.fileData.width}x${reply.fileData.height})`}</p>
                     </div>
                 </div>
             </div>
