@@ -39,6 +39,7 @@ module.exports = {
       'replyBG': '#292c2f',
       'replyBGH': '#1d1d21',
       'black': '#000000',
+      'yellow': '#f5d537',
     },
     fontFamily: {
       'tahoma': ['Tahoma', 'sans-serif'],

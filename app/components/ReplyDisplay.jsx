@@ -7,20 +7,31 @@ export default function ReplyDisplay(props) {
     const reply = props.reply
     const op = props.op || false
     let bytes;
+
     if ('fileData' in reply) {
         bytes = convertBytesToKBorMB(reply.fileData.bytes)
     }
 
     const [imageEnlarge, setImageEnlarge] = useState(false)
     const [isHighlighted, setIsHighlighted] = useState('') 
+    const [borderHighlight, setBorderHighlight] = useState('border-black')
+    const [replies, setReplies] = useState(null)
 
     useEffect(() => {
         if (props.highlight === reply.postNumber) {
             setIsHighlighted('H')
+            setBorderHighlight('border-yellow')
         } else {
             setIsHighlighted('')
+            setBorderHighlight('border-black')
         }
     }, [props.highlight])
+
+    useEffect(() => {
+        if (props.getYous) {
+            setReplies(props.getYous[`${reply.postNumber}`])
+        }
+    }, [props.getYous])
 
     function enlargeImage() {
         setImageEnlarge(!imageEnlarge)
@@ -37,8 +48,15 @@ export default function ReplyDisplay(props) {
         window.open(reply.fileData.url, '_blank')
     }
 
+    function goToReply(e) {
+        const postNum = e.target.innerText.split('>>')[1]
+        const elementToScrollTo = document.getElementById(postNum)
+        elementToScrollTo.scrollIntoView({ behavior: 'auto' });
+        props.setHighlight(Number(postNum))
+      }
+
   return (
-    <div id={reply.postNumber} className='border border-bllack ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit'>
+    <div id={reply.postNumber} className={`border ${borderHighlight} ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit`}>
         <div className='flex flex-col bg-black pl-2 pr-2'>
             <div className='flex items-center gap-1'> 
                 <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
@@ -63,7 +81,7 @@ export default function ReplyDisplay(props) {
             </div>
 
             <div className='text-sm'>
-                <CommentRenderer setHighlight={props.setHighlight} comment={reply.comment}/>
+                <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment}/>
             </div>
         </div>}
 
@@ -78,14 +96,18 @@ export default function ReplyDisplay(props) {
                     </div>
                 </div>
             </div>
-            <CommentRenderer setHighlight={props.setHighlight} comment={reply.comment}/>
+            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment}/>
         </div>}
 
         {!bytes && <div className={`pt-2 flex gap-4 bg-replyBG${isHighlighted}`}>
-            <CommentRenderer setHighlight={props.setHighlight} comment={reply.comment}/>
+            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment}/>
         </div>}
 
-        <div></div>
+        {replies && <div className={`flex gap-1.5 bg-replyBG${isHighlighted} text-link text-xs underline pl-2 pr-2 pt-2 cursor-pointer`}>
+            {replies.map((reply, index) => (
+                <p onClick={(e) => goToReply(e)} key={index}>{reply}</p>
+            ))}
+        </div>}
     </div>
   )
 }

@@ -90,3 +90,11 @@ export function deleteThread(postNum) {
 
   axios.delete(url)
 }
+
+export function addToArray(arr, str) {
+  if (!arr.includes(str)) {
+    arr.push(str)
+  }
+  
+  return arr
+}

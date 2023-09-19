@@ -1,8 +1,9 @@
 import React from 'react';
 import YoutubeEmbedRenderer from './YoutubeEmbedRenderer';
+import { addToArray } from '../controller/controller';
 
-function CommentRenderer({ comment, setHighlight }) {
-  
+function CommentRenderer({ comment, setHighlight, postNum, yous }) {
+
   function formatReply(line, index) {
     const finalLine = []
     let normalWords = []
@@ -40,6 +41,13 @@ function CommentRenderer({ comment, setHighlight }) {
         finalLine.push(
           <span onClick={(e) => goToReply(e)} key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word + " "}</span>
         )
+
+        const ogPost = word.split('>>')[1]
+        if (!yous[`${ogPost}`]) {
+          yous[`${ogPost}`] = [`>>${postNum}`]
+        } else {
+          yous[`${ogPost}`] = addToArray(yous[`${ogPost}`], `>>${postNum}`)
+        }
       }
 
       else if (word.startsWith('https://www.youtube.com') || word.startsWith('https://youtu.be/')) {
