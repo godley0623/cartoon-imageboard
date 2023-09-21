@@ -1,12 +1,18 @@
 import React from 'react'
 import CommentRenderer from './CommentRenderer'
 
-export default function ReplyPreview( { bytes, getYous, setHighlight, replyPreview, getReplyFromThread } ) {
+export default function ReplyPreview( { postNumber, bytes, getYous, setHighlight, replyPreview, getReplyFromThread } ) {
     const reply = getReplyFromThread(replyPreview)
     let hasFile
     'fileData' in reply ? hasFile = true : hasFile = false
     const op = isOp()
     const replies = getYous[`${reply.postNumber}`]
+
+    const style = {
+        position: 'absolute',
+        top: '-.05rem',
+        left: '15rem'
+    }
     
     function isOp() {
         try {
@@ -16,10 +22,9 @@ export default function ReplyPreview( { bytes, getYous, setHighlight, replyPrevi
             return false
         }
     }
+
     return (
-        <div id='reply-preview' className='flex mt-2 mb-2 ml-1'>
-        <p className='text-light text-sm m-0 p-0'>{'>>'}</p>
-        <div className={`border border-black laptop:ml-3 laptop:mr-3 laptop:w-fit`}>
+        <div id='reply-preview' style={style} className={`z-50 flex flex-col border border-black laptop:ml-3 laptop:mr-3 w-max max-w-5xl`}>
             <div className='flex flex-col bg-black pl-2 pr-2'>
                 <div className='flex items-center gap-1'> 
                     <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
@@ -37,9 +42,9 @@ export default function ReplyPreview( { bytes, getYous, setHighlight, replyPrevi
                    <div className='w-44 cursor-pointer pl-1 pr-1 pt-1 pb-1'>   
                         <img width={500} height={500} src={reply.fileData.url} alt="reply" /> 
     
-                        <div className='w-full'>
+                        {/*<div className='w-full'>
                             <p>{`${bytes} ${reply.fileData.format.toUpperCase()}`}</p>
-                        </div>
+                        </div>*/}
                    </div>
                 </div>
     
@@ -57,7 +62,6 @@ export default function ReplyPreview( { bytes, getYous, setHighlight, replyPrevi
                     <p key={index}>{reply}</p>
                 ))}
             </div>}
-        </div>
         </div>
     )
 }

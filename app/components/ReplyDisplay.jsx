@@ -66,15 +66,19 @@ export default function ReplyDisplay(props) {
     }
 
     function handlePreview(reply) {
+        if (replyPreview !== 0) return
+
         const replyNum = Number(reply.split('>>')[1])
         setReplyPreview(replyNum)
+        //console.log(replyPreview)
     }
     function removePreview() {
         setReplyPreview(0)
+        //console.log(replyPreview)
     }
 
   return (
-    <div id={reply.postNumber} className={`bg-replyBG${isHighlighted} border ${borderHighlight} ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit`}>
+    <div id={reply.postNumber} className={`relative bg-replyBG${isHighlighted} border ${borderHighlight} ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit`}>
         <div className='flex flex-col bg-black pl-2 pr-2'>
             <div className='flex items-center gap-1'> 
                 <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
@@ -128,7 +132,7 @@ export default function ReplyDisplay(props) {
         </div>}
 
         {replyPreview > 0 &&
-            <ReplyPreview bytes={bytes} yous={props.you} getYous={props.getYous} setHighlight={props.setHighlight} replyPreview={replyPreview} getReplyFromThread={props.getReplyFromThread}/>
+            <ReplyPreview postNumber={reply.postNumber} bytes={bytes} yous={props.you} getYous={props.getYous} setHighlight={props.setHighlight} replyPreview={replyPreview} getReplyFromThread={props.getReplyFromThread}/>
         }
     </div>
   )

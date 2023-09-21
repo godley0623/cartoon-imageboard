@@ -53,7 +53,7 @@ export default function Home() {
     <main>
       <div className='w-full flex flex-col items-center border-borderColor border-b-2'> 
         <h1 className='text-light text-3xl font-bold font-tahoma'>CartoonHub</h1>
-        <p className="text-light">Discuss your favorite cartoon shows</p>
+        <p className="text-light">Discuss your favorite cartoon shows and comics</p>
       </div>
 
       <div className="w-full flex justify-center border-borderColor border-b-2">
