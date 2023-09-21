@@ -2,7 +2,7 @@ import React from 'react';
 import YoutubeEmbedRenderer from './YoutubeEmbedRenderer';
 import { addToArray } from '../controller/controller';
 
-function CommentRenderer({ comment, setHighlight, postNum, yous }) {
+function CommentRenderer({ comment, setHighlight, postNum, yous, handlePreview, removePreview }) {
 
   function formatReply(line, index) {
     const finalLine = []
@@ -39,7 +39,7 @@ function CommentRenderer({ comment, setHighlight, postNum, yous }) {
         combineNormalWords(index, key)
 
         finalLine.push(
-          <span onClick={(e) => goToReply(e)} key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word + " "}</span>
+          <span onMouseOver={() => handlePreview(word)} onMouseOut={removePreview} onClick={(e) => goToReply(e)} key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word + " "}</span>
         )
 
         const ogPost = word.split('>>')[1]

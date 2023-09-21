@@ -43,11 +43,22 @@ export default function ThreadPage() {
       router.push('/')
     }
 
+    function getReplyFromThread(postNum) {
+      if (thread.postNumber === postNum) return thread
+
+      let result
+      thread.replies.forEach((reply) => {
+          if (reply.postNumber === postNum) result = reply
+      })
+
+      return result
+    }
+
   return (
     <div>
       <div className='w-full flex flex-col items-center border-borderColor border-b-2'> 
         <h1 className='text-light text-3xl font-bold font-tahoma'>CartoonHub</h1>
-        <p className="text-light">Discuss your favorite cartoon shows</p>
+        <p className="text-light">Discuss your favorite cartoon shows and comics</p>
       </div>
 
       <div className='flex justify-center'>
@@ -66,12 +77,12 @@ export default function ThreadPage() {
 
       {JSON.stringify(thread) !== '{}' && 
         <>
-          <ReplyDisplay yous={yous} getYous={getYous} highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread}/>
+          <ReplyDisplay yous={yous} getYous={getYous} highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread} getReplyFromThread={getReplyFromThread}/>
           
           <div>
           {thread.replies.map((reply, key) => (
             <div key={key} className='mt-2'>
-              <ReplyDisplay yous={yous} getYous={getYous}  highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply}/>
+              <ReplyDisplay yous={yous} getYous={getYous}  highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply} getReplyFromThread={getReplyFromThread}/>
             </div>
           ))}
           </div>

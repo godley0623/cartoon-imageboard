@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { convertBytesToKBorMB } from '../controller/controller'
 import CommentRenderer from './CommentRenderer'
+import ReplyPreview from './ReplyPreview'
 
 export default function ReplyDisplay(props) {
     const reply = props.reply
@@ -16,6 +17,15 @@ export default function ReplyDisplay(props) {
     const [isHighlighted, setIsHighlighted] = useState('') 
     const [borderHighlight, setBorderHighlight] = useState('border-black')
     const [replies, setReplies] = useState(null)
+    const [replyPreview, setReplyPreview] = useState(0)
+
+    useEffect(() => {
+        if (borderHighlight !== 'border-black') {
+            setTimeout(() => {
+                setBorderHighlight('border-black')
+            }, 2000)
+        }
+    },[borderHighlight])
 
     useEffect(() => {
         if (props.highlight === reply.postNumber) {
@@ -51,12 +61,20 @@ export default function ReplyDisplay(props) {
     function goToReply(e) {
         const postNum = e.target.innerText.split('>>')[1]
         const elementToScrollTo = document.getElementById(postNum)
-        elementToScrollTo.scrollIntoView({ behavior: 'auto' });
+        elementToScrollTo.scrollIntoView({ behavior: 'auto' })
         props.setHighlight(Number(postNum))
-      }
+    }
+
+    function handlePreview(reply) {
+        const replyNum = Number(reply.split('>>')[1])
+        setReplyPreview(replyNum)
+    }
+    function removePreview() {
+        setReplyPreview(0)
+    }
 
   return (
-    <div id={reply.postNumber} className={`border ${borderHighlight} ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit`}>
+    <div id={reply.postNumber} className={`bg-replyBG${isHighlighted} border ${borderHighlight} ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit`}>
         <div className='flex flex-col bg-black pl-2 pr-2'>
             <div className='flex items-center gap-1'> 
                 <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 
@@ -81,7 +99,7 @@ export default function ReplyDisplay(props) {
             </div>
 
             <div className='text-sm'>
-                <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment}/>
+                <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment} handlePreview={handlePreview} removePreview={removePreview}/>
             </div>
         </div>}
 
@@ -96,18 +114,22 @@ export default function ReplyDisplay(props) {
                     </div>
                 </div>
             </div>
-            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment}/>
+            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment} handlePreview={handlePreview} removePreview={removePreview}/>
         </div>}
 
         {!bytes && <div className={`pt-2 flex gap-4 bg-replyBG${isHighlighted}`}>
-            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment}/>
+            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment} handlePreview={handlePreview} removePreview={removePreview}/>
         </div>}
 
         {replies && <div className={`flex gap-1.5 bg-replyBG${isHighlighted} text-link text-xs underline pl-2 pr-2 pt-2 cursor-pointer`}>
             {replies.map((reply, index) => (
-                <p onClick={(e) => goToReply(e)} key={index}>{reply}</p>
+                <p onMouseOver={() => handlePreview(reply)} onMouseOut={removePreview} onClick={(e) => goToReply(e)} key={index}>{reply}</p>
             ))}
         </div>}
+
+        {replyPreview > 0 &&
+            <ReplyPreview bytes={bytes} yous={props.you} getYous={props.getYous} setHighlight={props.setHighlight} replyPreview={replyPreview} getReplyFromThread={props.getReplyFromThread}/>
+        }
     </div>
   )
 }
