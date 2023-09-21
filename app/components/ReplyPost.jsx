@@ -85,7 +85,7 @@ export default function ReplyPost(props) {
     }
 
   return (
-    <div className='border border-light w-80 fixed top-1 flex flex-col items-center bg-borderColor'>
+    <div style={ {zIndex: '999'} } className='border border-light w-80 fixed top-1 flex flex-col items-center bg-borderColor'>
 
         <div className='text-light text-xs w-full bg-black border-b border-light mb-1'>
             <div className='w-full flex justify-between'> 
