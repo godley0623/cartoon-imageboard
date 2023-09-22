@@ -113,3 +113,12 @@ export function getTranslatedText(language, text, setComment) {
     return false
   })
 }
+
+export function saveLanguageSetting(language) {
+  localStorage.setItem('ch: language', language)
+}
+
+export function getLanguageSetting() {
+  const language = localStorage.getItem('ch: language') || 'None'
+  return language
+}

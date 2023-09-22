@@ -5,6 +5,7 @@ import axios from 'axios'
 import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
 import ReplyPost from '@/app/components/ReplyPost'
+import { getLanguageSetting, saveLanguageSetting } from '@/app/controller/controller'
 
 export default function ThreadPage() {
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
@@ -41,6 +42,8 @@ export default function ThreadPage() {
         //console.log(data)
         setThread(data)
       })
+
+      setGlobalLanguage(getLanguageSetting())
     }, [])
 
     useEffect(() => {
@@ -70,6 +73,7 @@ export default function ThreadPage() {
 
     function changeGlobalLanguage(e) {
       setGlobalLanguage(e.target.value)
+      saveLanguageSetting(e.target.value)
     }
 
   return (

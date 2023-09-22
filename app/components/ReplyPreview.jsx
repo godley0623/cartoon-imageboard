@@ -24,7 +24,7 @@ export default function ReplyPreview( { postNumber, bytes, getYous, setHighlight
     }
 
     return (
-        <div id='reply-preview' style={style} className={`z-50 flex flex-col border border-black laptop:ml-3 laptop:mr-3 w-max max-w-5xl`}>
+        <div id='reply-preview' style={style} className={`mobile:hidden z-50 flex flex-col border border-black laptop:ml-3 laptop:mr-3 w-max max-w-5xl`}>
             <div className='flex flex-col bg-black pl-2 pr-2'>
                 <div className='flex items-center gap-1'> 
                     <p className='text-nameColor font-bold text-sm'>{reply.name}</p> 

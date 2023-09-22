@@ -46,6 +46,8 @@ module.exports = {
       'arial': ['arial', 'helvetica', 'sans-serif']
     },
     screens: {
+      'mobile': {'min': '0px', 'max': '640px'},
+
       'tablet': '640px',
       // => @media (min-width: 640px) { ... }
 
