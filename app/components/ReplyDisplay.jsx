@@ -64,8 +64,8 @@ export default function ReplyDisplay(props) {
             return
         }
         
-        setComment("Retrieving Translation Data From Server...")
-        getTranslatedText(props.globalLanguage, reply.comment, setComment)
+        //setComment("Retrieving Translation Data From Server...")
+        //getTranslatedText(props.globalLanguage, reply.comment, setComment)
     }, [props.globalLanguage])
 
     useEffect(() => {
@@ -75,9 +75,9 @@ export default function ReplyDisplay(props) {
             return
         }
 
-        setComment("Retrieving Translation Data From Server...")
+        //setComment("Retrieving Translation Data From Server...")
 
-        getTranslatedText(selectedLanguage, reply.comment, setComment)
+        //getTranslatedText(selectedLanguage, reply.comment, setComment)
     }, [selectedLanguage])
 
     function enlargeImage() {
