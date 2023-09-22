@@ -1,35 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CartoonHub
 
-## Getting Started
+# Visit Website
+Deployed Website: https://cartoonhub.vercel.app/  
 
-First, run the development server:
+# Project Description
+A full CRUD web application that let's users create threads to talk about their favorite cartoons and comics.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+# Technology USed
+-HTML   
+-CSS  
+-Javascript     
+-React  
+-Next JS  
+-Tailwind CSS  
+-Node JS  
+-Express JS  
+-MongoDB  
+-OpenAI API  
+-Cloudinary API (For image hosting)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Landing Page  
+Users can create threads, or go to an existing thread  
+-Full Screen  
+![image](screenshots/home.png)  
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+-Mobile Screen  
+![image](screenshots/mobile_home.png)  
+  
+# Thread Page  
+Users can make a reply to a thread  
+-Full Screen  
+![image](screenshots/thread.png)  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+-Mobile Screen  
+![image](screenshots/mobile_thread.png)
+  
+# AI Translating  
+Users can translate all posts on a thread to any language of their choosing, no matter the language of the original post. I used the OpenAI API to create a bot that's capable of detecting the language of a post translating it to the desired language, and then it sends the translation data to the frontend  
+-Before
+![image](screenshots/translate_before.png)  
 
-## Learn More
+-After  
+![image](screenshots/translate_after.png)  
 
-To learn more about Next.js, take a look at the following resources:
+# Automatic YouTube embedding feature  
+User's can include YouTube links in their posts. Doing so will automatically change it into a link to the original video, along with an option to embed the video on the site itself  
+![image](screenshots/youtube.png)  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Thread Rules  
+-Threads on the landing page are ordered by the date of that thread's last reply. From earliest to latest.  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+-Only a maximum of 20 threads can be on the landing page at a time.  
 
-## Deploy on Vercel
+-If a new thread is made while there are 20 threads on the landing page, the last thread gets deleted.  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-Starting a line in your post with ">" will turn that line into a quote and change the text color to green.  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# cartoon-imageboard
+-Include >>(postnumber) in your post to make that part of your post a direct reply. Direct reply text are changed to blue, clicking on them sends you to that post, and hovering over them shows you a preview of that post. Clicking on a post's postnumber will automatically include a direct reply to that post.  
+![image](screenshots/reply_preview.png)
