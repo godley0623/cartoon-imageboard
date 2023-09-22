@@ -36,7 +36,11 @@ Users can make a reply to a thread
 ![image](screenshots/mobile_thread.png)
   
 # AI Translating  
-Users can translate all posts on a thread to any language of their choosing, no matter the language of the original post. I used the OpenAI API to create a bot that's capable of detecting the language of a post translating it to the desired language, and then it sends the translation data to the frontend  
+Users can translate all posts on a thread to any language of their choosing, no matter the language of the original post. I used the OpenAI API to create a bot that's capable of detecting the language of a post translating it to the desired language, and then it sends the translation data to the frontend.  
+
+gpt-3.5-turbo is faster but less accurate  
+gpt-4 is slower but more accurate
+
 -Before
 ![image](screenshots/translate_before.png)  
 

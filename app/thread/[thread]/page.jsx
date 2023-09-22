@@ -20,6 +20,7 @@ export default function ThreadPage() {
       "English",
       "Spanish",
       "Chinese",
+      "Russian",
       "French",
       "German",
       "Italian",
