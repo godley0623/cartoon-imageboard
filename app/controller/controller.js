@@ -99,10 +99,10 @@ export function addToArray(arr, str) {
   return arr
 }
 
-export function getTranslatedText(language, text, setComment) {
+export function getTranslatedText(language, text, model, setComment) {
   //const url = `https://cartoon-imageboard-server.vercel.app/translate`
   const url = 'https://cartoonhub-server.cyclic.cloud/translate'
-  const requestData = {language: language, text: text}
+  const requestData = {language: language, text: text, model: model}
 
   axios.post(url, requestData)
   .then((response) => {
@@ -121,4 +121,13 @@ export function saveLanguageSetting(language) {
 export function getLanguageSetting() {
   const language = localStorage.getItem('ch: language') || 'None'
   return language
+}
+
+export function saveGptSetting(model) {
+  localStorage.setItem('ch: gpt-model', model)
+}
+
+export function getGptSetting() {
+  const model = localStorage.getItem('ch: gpt-model') || 'gpt-3.5-turbo'
+  return model
 }

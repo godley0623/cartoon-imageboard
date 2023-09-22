@@ -5,7 +5,7 @@ import axios from 'axios'
 import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
 import ReplyPost from '@/app/components/ReplyPost'
-import { getLanguageSetting, saveLanguageSetting } from '@/app/controller/controller'
+import { getGptSetting, getLanguageSetting, saveGptSetting, saveLanguageSetting } from '@/app/controller/controller'
 
 export default function ThreadPage() {
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
@@ -27,11 +27,17 @@ export default function ThreadPage() {
       "Korean"
     ]
 
+    const gptOptions = [
+      "gpt-3.5-turbo",
+      "gpt-4"
+    ]
+
     const [thread, setThread] = useState({})
     const [postToggle, setPostToggle] = useState(false)
     const [replies, setReplies] = useState("")
     const [highlight, setHighlight] = useState(0)
     const [globalLanguage, setGlobalLanguage] = useState(languageOptions[1])
+    const [gptModel, setGptModel] = useState(gptOptions[0])
     const [getYous, setGetYous] = useState(null)
     let yous = {}
 
@@ -42,8 +48,9 @@ export default function ThreadPage() {
         //console.log(data)
         setThread(data)
       })
-
+      
       setGlobalLanguage(getLanguageSetting())
+      setGptModel(getGptSetting())
     }, [])
 
     useEffect(() => {
@@ -76,6 +83,11 @@ export default function ThreadPage() {
       saveLanguageSetting(e.target.value)
     }
 
+    function changeGptModel(e) {
+      setGptModel(e.target.value)
+      saveGptSetting(e.target.value)
+    }
+
   return (
     <div>
       <div className='w-full flex flex-col items-center border-borderColor border-b-2'> 
@@ -98,6 +110,11 @@ export default function ThreadPage() {
               <option value={lang} key={index}>{lang}</option>
             ))}
           </select>
+          <select onChange={(e) => changeGptModel(e)} className='text-sm text-center' value={gptModel}>
+            {gptOptions.map((model, index) => (
+              <option value={model} key={index}>{model}</option>
+            ))}
+          </select>
         </div>
       </div>}
       {postToggle &&<div className='flex justify-center mb-4 border-borderColor border-b-2'>
@@ -107,12 +124,12 @@ export default function ThreadPage() {
 
       {JSON.stringify(thread) !== '{}' && 
         <>
-          <ReplyDisplay globalLanguage={globalLanguage} yous={yous} getYous={getYous} highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread} getReplyFromThread={getReplyFromThread}/>
+          <ReplyDisplay gptModel={gptModel} globalLanguage={globalLanguage} yous={yous} getYous={getYous} highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread} getReplyFromThread={getReplyFromThread}/>
           
           <div>
           {thread.replies.map((reply, key) => (
             <div key={key} className='mt-2'>
-              <ReplyDisplay globalLanguage={globalLanguage} yous={yous} getYous={getYous}  highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply} getReplyFromThread={getReplyFromThread}/>
+              <ReplyDisplay gptModel={gptModel} globalLanguage={globalLanguage} yous={yous} getYous={getYous}  highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply} getReplyFromThread={getReplyFromThread}/>
             </div>
           ))}
           </div>

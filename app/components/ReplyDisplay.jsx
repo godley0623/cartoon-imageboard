@@ -31,6 +31,7 @@ export default function ReplyDisplay(props) {
     const [replyPreview, setReplyPreview] = useState(0)
     const [comment, setComment] = useState(reply.comment)
     const [selectedLanguage, setSelectedLanguage] = useState(languageOptions[0])
+    const [selectedGptModel, setSelectedGptModel] = useState('')
 
     useEffect(() => {
         if (borderHighlight !== 'border-black') {
@@ -57,7 +58,7 @@ export default function ReplyDisplay(props) {
     }, [props.getYous])
 
     useEffect(() => {
-        if (props.globalLanguage === 'Unchanged') return
+        if (props.globalLanguage === 'Unchanged' || selectedGptModel === '' || !reply.comment) return
 
         if (props.globalLanguage === 'None') {
             setComment(reply.comment)
@@ -65,8 +66,12 @@ export default function ReplyDisplay(props) {
         }
         
         setComment("Retrieving Translation Data From Server...")
-        getTranslatedText(props.globalLanguage, reply.comment, setComment)
-    }, [props.globalLanguage])
+        getTranslatedText(props.globalLanguage, reply.comment, selectedGptModel, setComment)
+    }, [props.globalLanguage, selectedGptModel])
+
+    useEffect(() => {
+        setSelectedGptModel(props.gptModel)
+    }, [props.gptModel])
 
     useEffect(() => {
         if (props.globalLanguage !== 'Original') return
