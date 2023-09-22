@@ -3,7 +3,6 @@ import YoutubeEmbedRenderer from './YoutubeEmbedRenderer';
 import { addToArray } from '../controller/controller';
 
 function CommentRenderer({ comment, setHighlight, postNum, yous, handlePreview, removePreview }) {
-
   function formatReply(line, index) {
     const finalLine = []
     let normalWords = []

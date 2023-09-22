@@ -13,10 +13,24 @@ export default function ThreadPage() {
     const params = useParams()
     const threadNum = Number(params.thread)
 
+    const languageOptions = [
+      "Unchanged",
+      "None",
+      "English",
+      "Spanish",
+      "Chinese",
+      "French",
+      "German",
+      "Italian",
+      "Japanese",
+      "Korean"
+    ]
+
     const [thread, setThread] = useState({})
     const [postToggle, setPostToggle] = useState(false)
     const [replies, setReplies] = useState("")
     const [highlight, setHighlight] = useState(0)
+    const [globalLanguage, setGlobalLanguage] = useState(languageOptions[1])
     const [getYous, setGetYous] = useState(null)
     let yous = {}
 
@@ -24,7 +38,7 @@ export default function ThreadPage() {
       axios.get(`${serverUrl}threads/${threadNum}`)
       .then(response => {
         const data = response.data
-        console.log(data)
+        //console.log(data)
         setThread(data)
       })
     }, [])
@@ -54,11 +68,15 @@ export default function ThreadPage() {
       return result
     }
 
+    function changeGlobalLanguage(e) {
+      setGlobalLanguage(e.target.value)
+    }
+
   return (
     <div>
       <div className='w-full flex flex-col items-center border-borderColor border-b-2'> 
         <h1 className='text-light text-3xl font-bold font-tahoma'>CartoonHub</h1>
-        <p className="text-light">Discuss your favorite cartoon shows and comics</p>
+        <p className="text-light">Discuss your favorite cartoons and comics</p>
       </div>
 
       <div className='flex justify-center'>
@@ -67,8 +85,16 @@ export default function ThreadPage() {
         <MainButton text='Update'/>
       </div>
 
-      {!postToggle &&<div className='flex justify-center mb-4 border-borderColor border-b-2'>
+      {!postToggle &&<div className='flex flex-col items-center justify-center mb-4 border-borderColor border-b-2'>
         <MainButton click={toggleForm} text='Post Reply'/>
+        <div className='flex mt-2.5 gap-2'>
+          <p className='text-light font-bold'>Translate Thread:</p>
+          <select className='text-sm text-center' onChange={(e) => changeGlobalLanguage(e)} value={globalLanguage}>
+            {languageOptions.map((lang, index) => (
+              <option value={lang} key={index}>{lang}</option>
+            ))}
+          </select>
+        </div>
       </div>}
       {postToggle &&<div className='flex justify-center mb-4 border-borderColor border-b-2'>
         <MainButton click={toggleForm} text='Close Post Form'/>
@@ -77,12 +103,12 @@ export default function ThreadPage() {
 
       {JSON.stringify(thread) !== '{}' && 
         <>
-          <ReplyDisplay yous={yous} getYous={getYous} highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread} getReplyFromThread={getReplyFromThread}/>
+          <ReplyDisplay globalLanguage={globalLanguage} yous={yous} getYous={getYous} highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread} getReplyFromThread={getReplyFromThread}/>
           
           <div>
           {thread.replies.map((reply, key) => (
             <div key={key} className='mt-2'>
-              <ReplyDisplay yous={yous} getYous={getYous}  highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply} getReplyFromThread={getReplyFromThread}/>
+              <ReplyDisplay globalLanguage={globalLanguage} yous={yous} getYous={getYous}  highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply} getReplyFromThread={getReplyFromThread}/>
             </div>
           ))}
           </div>

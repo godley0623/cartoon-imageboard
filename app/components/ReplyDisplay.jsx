@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { convertBytesToKBorMB } from '../controller/controller'
+import { convertBytesToKBorMB, getTranslatedText } from '../controller/controller'
 import CommentRenderer from './CommentRenderer'
 import ReplyPreview from './ReplyPreview'
 
 export default function ReplyDisplay(props) {
     const reply = props.reply
     const op = props.op || false
-    let bytes;
+    let bytes
+    const languageOptions = [
+        "Original",
+        "English",
+        "Spanish",
+        "Chinese",
+        "French",
+        "German",
+        "Italian",
+        "Japanese",
+        "Korean"
+    ]
 
     if ('fileData' in reply) {
         bytes = convertBytesToKBorMB(reply.fileData.bytes)
@@ -18,6 +29,8 @@ export default function ReplyDisplay(props) {
     const [borderHighlight, setBorderHighlight] = useState('border-black')
     const [replies, setReplies] = useState(null)
     const [replyPreview, setReplyPreview] = useState(0)
+    const [comment, setComment] = useState(reply.comment)
+    const [selectedLanguage, setSelectedLanguage] = useState(languageOptions[0])
 
     useEffect(() => {
         if (borderHighlight !== 'border-black') {
@@ -42,6 +55,30 @@ export default function ReplyDisplay(props) {
             setReplies(props.getYous[`${reply.postNumber}`])
         }
     }, [props.getYous])
+
+    useEffect(() => {
+        if (props.globalLanguage === 'Unchanged') return
+
+        if (props.globalLanguage === 'None') {
+            setComment(reply.comment)
+            return
+        }
+        
+        setComment("Retrieving Translation Data From Server...")
+        getTranslatedText(props.globalLanguage, reply.comment, setComment)
+    }, [props.globalLanguage])
+
+    useEffect(() => {
+        if (props.globalLanguage !== 'Original') return
+        if (selectedLanguage === 'Original') {
+            setComment(reply.comment)
+            return
+        }
+
+        setComment("Retrieving Translation Data From Server...")
+
+        getTranslatedText(selectedLanguage, reply.comment, setComment)
+    }, [selectedLanguage])
 
     function enlargeImage() {
         setImageEnlarge(!imageEnlarge)
@@ -77,6 +114,10 @@ export default function ReplyDisplay(props) {
         //console.log(replyPreview)
     }
 
+    function changeSelectedLanguage(e) {
+        setSelectedLanguage(e.target.value)
+    }
+
   return (
     <div id={reply.postNumber} className={`relative bg-replyBG${isHighlighted} border ${borderHighlight} ml-1.5 mr-1.5 laptop:ml-3 laptop:mr-3 laptop:w-fit`}>
         <div className='flex flex-col bg-black pl-2 pr-2'>
@@ -86,6 +127,13 @@ export default function ReplyDisplay(props) {
                 <div className='flex gap-2 text-light text-sm pt-1 pb-1'>
                     <p>{reply.created_at}</p>
                     <p>{`No. `}<span onClick={addPostNumToReply} className='cursor-pointer'>{`${reply.postNumber}`}</span></p>
+                    
+                    {/*<select className='text-black' onChange={(e) => changeSelectedLanguage(e)} value={selectedLanguage}>
+                        {languageOptions.map((lang, index) => (
+                            <option key={index} value={lang}>{lang}</option>
+                        ))}
+                        </select>*/}
+
                 </div>
             </div>
             {op && <p className='text-subjectColor font-bold text-sm'>{reply.subject}</p>}
@@ -103,7 +151,7 @@ export default function ReplyDisplay(props) {
             </div>
 
             <div className='text-sm'>
-                <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment} handlePreview={handlePreview} removePreview={removePreview}/>
+                <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
             </div>
         </div>}
 
@@ -118,11 +166,11 @@ export default function ReplyDisplay(props) {
                     </div>
                 </div>
             </div>
-            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment} handlePreview={handlePreview} removePreview={removePreview}/>
+            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
         </div>}
 
         {!bytes && <div className={`pt-2 flex gap-4 bg-replyBG${isHighlighted}`}>
-            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={reply.comment} handlePreview={handlePreview} removePreview={removePreview}/>
+            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
         </div>}
 
         {replies && <div className={`flex gap-1.5 bg-replyBG${isHighlighted} text-link text-xs underline pl-2 pr-2 pt-2 cursor-pointer`}>

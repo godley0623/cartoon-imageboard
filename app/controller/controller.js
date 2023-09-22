@@ -98,3 +98,18 @@ export function addToArray(arr, str) {
   
   return arr
 }
+
+export function getTranslatedText(language, text, setComment) {
+  //const url = `https://cartoon-imageboard-server.vercel.app/translate`
+  const url = 'https://cartoonhub-server.cyclic.cloud/translate'
+  const requestData = {language: language, text: text}
+
+  axios.post(url, requestData)
+  .then((response) => {
+    setComment(response.data.message)
+    return response.data.message
+  })
+  .catch(() => {
+    return false
+  })
+}
