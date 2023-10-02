@@ -6,6 +6,8 @@ import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
 import ReplyPost from '@/app/components/ReplyPost'
 import { getGptSetting, getLanguageSetting, saveGptSetting, saveLanguageSetting } from '@/app/controller/controller'
+import Image from 'next/image'
+import banner from '../../../assets/cartoonhub_banner.gif'
 
 export default function ThreadPage() {
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
@@ -94,6 +96,7 @@ export default function ThreadPage() {
       <div className='w-full flex flex-col items-center border-borderColor border-b-2'> 
         <h1 className='text-light text-3xl font-bold font-tahoma'>CartoonHub</h1>
         <p className="text-light">Discuss your favorite cartoons and comics</p>
+        <Image className='w-auto h-14 mb-1.5 px-4' width={400} height={400} src={banner} alt="Banner" />
       </div>
 
       <div className='flex justify-center'>
