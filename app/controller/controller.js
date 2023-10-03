@@ -131,3 +131,11 @@ export function getGptSetting() {
   const model = localStorage.getItem('ch: gpt-model') || 'gpt-3.5-turbo'
   return model
 }
+
+export function changeGifToPng(imageUrl) {
+  const isGif = imageUrl.includes('.gif')
+  if (!isGif) return imageUrl
+  
+  const newPng = imageUrl.split('.gif')[0] + '.png'
+  return newPng
+}

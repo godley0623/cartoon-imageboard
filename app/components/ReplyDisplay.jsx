@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { convertBytesToKBorMB, getTranslatedText } from '../controller/controller'
+import { changeGifToPng, convertBytesToKBorMB, getTranslatedText } from '../controller/controller'
 import CommentRenderer from './CommentRenderer'
 import ReplyPreview from './ReplyPreview'
 
@@ -147,7 +147,7 @@ export default function ReplyDisplay(props) {
         {!imageEnlarge && bytes && <div className={`flex flex-col bg-replyBG${isHighlighted} pb-2`}>
             <div className='text-light text-xxs text-center h-fit'>
                <div className='w-44 cursor-pointer pl-1 pr-1 pt-1 pb-1'>   
-                    <Image width={500} height={500} onClick={enlargeImage} src={reply.fileData.url} alt="reply" /> 
+                    <Image width={500} height={500} onClick={enlargeImage} src={changeGifToPng(reply.fileData.url)} alt="reply" /> 
 
                     <div className='w-full'>
                         <p>{`${bytes} ${reply.fileData.format.toUpperCase()}`}</p>

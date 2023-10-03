@@ -1,5 +1,6 @@
 import React from 'react'
 import CommentRenderer from './CommentRenderer'
+import { changeGifToPng } from '../controller/controller'
 
 export default function ReplyPreview( { postNumber, bytes, getYous, setHighlight, replyPreview, getReplyFromThread } ) {
     const reply = getReplyFromThread(replyPreview)
@@ -40,7 +41,7 @@ export default function ReplyPreview( { postNumber, bytes, getYous, setHighlight
             {hasFile && <div className={`flex flex-col bg-replyBGH pb-2`}>
                 <div className='text-light text-xxs text-center h-fit'>
                    <div className='w-44 cursor-pointer pl-1 pr-1 pt-1 pb-1'>   
-                        <img width={500} height={500} src={reply.fileData.url} alt="reply" /> 
+                        <img width={500} height={500} src={changeGifToPng(reply.fileData.url)} alt="reply" /> 
     
                         {/*<div className='w-full'>
                             <p>{`${bytes} ${reply.fileData.format.toUpperCase()}`}</p>

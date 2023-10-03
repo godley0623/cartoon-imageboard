@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { changeGifToPng } from '../controller/controller'
 
 export default function ThreadDisplay(props) {
     const router = useRouter()  
@@ -15,7 +16,7 @@ export default function ThreadDisplay(props) {
   return (
     <div onClick={goToThread}>
         
-        <div style={ {margin: '0 auto'} } className='w-32 cursor-pointer flex justify-center'> <Image className='w-auto max-h-44' width={500} height={500} src={image} alt="Thread" /> </div>
+        <div style={ {margin: '0 auto'} } className='w-32 cursor-pointer flex justify-center'> <Image className='w-auto max-h-44' width={500} height={500} src={changeGifToPng(image)} alt="Thread" /> </div>
         
         <div className='w-36 text-center'><p className='text-light text-xs'>{`Replies: ${thread.replies.length}`}</p></div>
         
