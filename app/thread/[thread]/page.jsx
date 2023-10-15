@@ -130,12 +130,12 @@ export default function ThreadPage() {
 
       {JSON.stringify(thread) !== '{}' && 
         <>
-          <ReplyDisplay gptModel={gptModel} globalLanguage={globalLanguage} yous={yous} getYous={getYous} highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread} getReplyFromThread={getReplyFromThread}/>
+          <ReplyDisplay thread={thread} gptModel={gptModel} globalLanguage={globalLanguage} yous={yous} getYous={getYous} highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} op={true} reply={thread} getReplyFromThread={getReplyFromThread}/>
           
           <div>
           {thread.replies.map((reply, key) => (
             <div key={key} className='mt-2'>
-              <ReplyDisplay gptModel={gptModel} globalLanguage={globalLanguage} yous={yous} getYous={getYous}  highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply} getReplyFromThread={getReplyFromThread}/>
+              <ReplyDisplay thread={thread} gptModel={gptModel} globalLanguage={globalLanguage} yous={yous} getYous={getYous}  highlight={highlight} setHighlight={setHighlight} postToggle={postToggle} setPostToggle={setPostToggle} setReplies={setReplies} reply={reply} getReplyFromThread={getReplyFromThread}/>
             </div>
           ))}
           </div>

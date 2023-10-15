@@ -5,6 +5,7 @@ import CommentRenderer from './CommentRenderer'
 import ReplyPreview from './ReplyPreview'
 
 export default function ReplyDisplay(props) {
+    const thread = props.thread
     const reply = props.reply
     const op = props.op || false
     let bytes
@@ -101,7 +102,7 @@ export default function ReplyDisplay(props) {
     }
 
     function goToReply(e) {
-        const postNum = e.target.innerText.split('>>')[1]
+        const postNum = e.target.innerText.split('>>')[1].replace(' (You)', '')
         const elementToScrollTo = document.getElementById(postNum)
         elementToScrollTo.scrollIntoView({ behavior: 'auto' })
         props.setHighlight(Number(postNum))
@@ -156,7 +157,7 @@ export default function ReplyDisplay(props) {
             </div>
 
             <div className='text-sm'>
-                <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
+                <CommentRenderer thread={thread}  yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
             </div>
         </div>}
 
@@ -171,11 +172,11 @@ export default function ReplyDisplay(props) {
                     </div>
                 </div>
             </div>
-            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
+            <CommentRenderer thread={thread} yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
         </div>}
 
         {!bytes && <div className={`pt-2 flex gap-4 bg-replyBG${isHighlighted}`}>
-            <CommentRenderer yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
+            <CommentRenderer thread={thread} yous={props.yous} postNum={reply.postNumber} setHighlight={props.setHighlight} comment={comment} handlePreview={handlePreview} removePreview={removePreview}/>
         </div>}
 
         {replies && <div className={`flex gap-1.5 bg-replyBG${isHighlighted} text-link text-xs underline pl-2 pr-2 pt-2 cursor-pointer`}>
@@ -185,7 +186,7 @@ export default function ReplyDisplay(props) {
         </div>}
 
         {replyPreview > 0 &&
-            <ReplyPreview postNumber={reply.postNumber} bytes={bytes} yous={props.you} getYous={props.getYous} setHighlight={props.setHighlight} replyPreview={replyPreview} getReplyFromThread={props.getReplyFromThread}/>
+            <ReplyPreview thread={thread} postNumber={reply.postNumber} bytes={bytes} yous={props.you} getYous={props.getYous} setHighlight={props.setHighlight} replyPreview={replyPreview} getReplyFromThread={props.getReplyFromThread}/>
         }
     </div>
   )

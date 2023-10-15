@@ -153,3 +153,17 @@ export async function getAnonId() {
     return "N/A"
   }
 }
+
+export function youCheck(thread, arrowReply) {
+  const postNum = Number(arrowReply.split(">>")[1])
+
+  thread.replies.map((reply) => {
+    if ( (reply.postNumber === postNum) && ('owner' in reply) ) {
+      if (reply.owner === localStorage.getItem("ch: anon-id")) {
+        arrowReply = arrowReply + " (You)"
+      }
+    }
+  })
+
+  return arrowReply
+}

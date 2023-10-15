@@ -1,8 +1,8 @@
 import React from 'react';
 import YoutubeEmbedRenderer from './YoutubeEmbedRenderer';
-import { addToArray } from '../controller/controller';
+import { addToArray, youCheck } from '../controller/controller';
 
-function CommentRenderer({ comment, setHighlight, postNum, yous, handlePreview, removePreview }) {
+function CommentRenderer({ thread, comment, setHighlight, postNum, yous, handlePreview, removePreview }) {
   function formatReply(line, index) {
     const finalLine = []
     let normalWords = []
@@ -11,7 +11,7 @@ function CommentRenderer({ comment, setHighlight, postNum, yous, handlePreview, 
     const normalClassName = 'text-light h-fit'
 
     function goToReply(e) {
-      const postNum = e.target.innerText.split('>>')[1]
+      const postNum = e.target.innerText.split('>>')[1].replace(' (You)', '')
       const elementToScrollTo = document.getElementById(postNum)
       elementToScrollTo.scrollIntoView({ behavior: 'auto' });
       setHighlight(Number(postNum))
@@ -36,9 +36,10 @@ function CommentRenderer({ comment, setHighlight, postNum, yous, handlePreview, 
     line.split(' ').map((word, key) => {
       if (word.startsWith('>>')) {
         combineNormalWords(index, key)
+        const newWord = youCheck(thread, word)
 
         finalLine.push(
-          <span onMouseOver={() => handlePreview(word)} onMouseOut={removePreview} onClick={(e) => goToReply(e)} key={`arrow-${index}-${key}`} className={replyArrowClassName}>{word + " "}</span>
+          <span onMouseOver={() => handlePreview(word)} onMouseOut={removePreview} onClick={(e) => goToReply(e)} key={`arrow-${index}-${key}`} className={replyArrowClassName}>{newWord + " "}</span>
         )
 
         const ogPost = word.split('>>')[1]

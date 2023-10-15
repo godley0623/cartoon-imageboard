@@ -2,7 +2,7 @@ import React from 'react'
 import CommentRenderer from './CommentRenderer'
 import { changeGifToPng } from '../controller/controller'
 
-export default function ReplyPreview( { postNumber, bytes, getYous, setHighlight, replyPreview, getReplyFromThread } ) {
+export default function ReplyPreview( { thread, postNumber, bytes, getYous, setHighlight, replyPreview, getReplyFromThread } ) {
     const reply = getReplyFromThread(replyPreview)
     let hasFile
     'fileData' in reply ? hasFile = true : hasFile = false
@@ -50,12 +50,12 @@ export default function ReplyPreview( { postNumber, bytes, getYous, setHighlight
                 </div>
     
                 <div className='text-sm'>
-                    <CommentRenderer yous={ {} } postNum={reply.postNumber} setHighlight={setHighlight} comment={reply.comment}/>
+                    <CommentRenderer thread={thread} yous={ {} } postNum={reply.postNumber} setHighlight={setHighlight} comment={reply.comment}/>
                 </div>
             </div>}
     
             {!hasFile && <div className={`pt-2 flex gap-4 bg-replyBGH`}>
-                <CommentRenderer yous={ {} } postNum={reply.postNumber} setHighlight={setHighlight} comment={reply.comment}/>
+                <CommentRenderer thread={thread} yous={ {} } postNum={reply.postNumber} setHighlight={setHighlight} comment={reply.comment}/>
             </div>}
     
             {replies && <div className={`flex gap-1.5 bg-replyBGH text-link text-xs underline pl-2 pr-2 pt-2 cursor-pointer`}>
