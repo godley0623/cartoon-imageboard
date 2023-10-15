@@ -10,7 +10,6 @@ import Image from 'next/image'
 import banner from '../../../assets/cartoonhub_banner.gif'
 
 export default function ThreadPage() {
-    getAnonId()
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
     const router = useRouter()
 
@@ -55,6 +54,8 @@ export default function ThreadPage() {
       
       setGlobalLanguage(getLanguageSetting())
       setGptModel(getGptSetting())
+
+      getAnonId()
     }, [])
 
     useEffect(() => {

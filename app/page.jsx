@@ -9,7 +9,6 @@ import Image from "next/image"
 import banner from '../assets/cartoonhub_banner.gif'
 
 export default function Home() {
-  getAnonId()
   const serverUrl = 'https://cartoonhub-server.vercel.app/'
   const maxThreads = 20
 
@@ -23,6 +22,8 @@ export default function Home() {
       const threadsBumpOrder = sortThreadsByCreatedAt(data)
       setThreads(threadsBumpOrder)
     })
+    
+    getAnonId()
   }, [])
 
   function deleteLastThread() {

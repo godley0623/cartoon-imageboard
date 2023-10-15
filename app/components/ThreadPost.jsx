@@ -27,6 +27,7 @@ export default function ThreadPost(props) {
     useEffect(() => {
         if (JSON.stringify(fileData) !== '{}') {
             setThreadData({
+                owner: localStorage.getItem("ch: anon-id") || "",
                 name: name,
                 subject: subject,
                 comment: comment,

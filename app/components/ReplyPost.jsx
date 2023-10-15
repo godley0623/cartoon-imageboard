@@ -28,6 +28,7 @@ export default function ReplyPost(props) {
     useEffect(() => {
         if (postReady) {
             const replyData = {
+                owner: localStorage.getItem("ch: anon-id") || "",
                 name: name || 'Anonymous',
                 comment: comment,
                 fileData: fileData,
