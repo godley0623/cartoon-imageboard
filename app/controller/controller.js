@@ -139,3 +139,17 @@ export function changeGifToPng(imageUrl) {
   const newPng = imageUrl.split('.gif')[0] + '.png'
   return newPng
 }
+
+export async function getAnonId() {
+  if (localStorage.getItem("ch: anon-id")) return localStorage.getItem("ch: anon-id")
+
+  try{
+    const response = await axios.get("https://code-guard-server.vercel.app/generate")
+    console.log(response.data.message)
+    localStorage.setItem("ch: anon-id", response.data.message)
+    return response.data.message
+  } catch(error) {
+    console.error(error)
+    return "N/A"
+  }
+}

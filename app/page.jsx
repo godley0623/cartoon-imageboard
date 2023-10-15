@@ -4,11 +4,12 @@ import MainButton from "./components/MainButton"
 import ThreadPost from "./components/ThreadPost"
 import ThreadDisplay from "./components/ThreadDisplay"
 import axios from "axios"
-import { sortThreadsByCreatedAt, deleteThread } from "./controller/controller"
+import { sortThreadsByCreatedAt, deleteThread, getAnonId } from "./controller/controller"
 import Image from "next/image"
 import banner from '../assets/cartoonhub_banner.gif'
 
 export default function Home() {
+  getAnonId()
   const serverUrl = 'https://cartoonhub-server.vercel.app/'
   const maxThreads = 20
 

@@ -5,11 +5,12 @@ import axios from 'axios'
 import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
 import ReplyPost from '@/app/components/ReplyPost'
-import { getGptSetting, getLanguageSetting, saveGptSetting, saveLanguageSetting } from '@/app/controller/controller'
+import { getAnonId, getGptSetting, getLanguageSetting, saveGptSetting, saveLanguageSetting } from '@/app/controller/controller'
 import Image from 'next/image'
 import banner from '../../../assets/cartoonhub_banner.gif'
 
 export default function ThreadPage() {
+    getAnonId()
     const serverUrl = 'https://cartoonhub-server.vercel.app/'
     const router = useRouter()
 
