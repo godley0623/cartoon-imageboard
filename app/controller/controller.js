@@ -100,8 +100,8 @@ export function addToArray(arr, str) {
 }
 
 export function getTranslatedText(language, text, model, setComment) {
-  //const url = `https://cartoon-imageboard-server.vercel.app/translate`
-  const url = 'https://cartoonhub-server.cyclic.cloud/translate'
+  const url = `https://cartoonhub-server.vercel.app/translate`
+  //const url = 'https://cartoonhub-server.cyclic.cloud/translate'
   const requestData = {language: language, text: text, model: model}
 
   axios.post(url, requestData)
