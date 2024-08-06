@@ -1,7 +1,9 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation' 
+import { useThread } from '@/app/hooks/useThread'
 import axios from 'axios'
+import { Checkbox } from "antd";
 import ReplyDisplay from '@/app/components/ReplyDisplay'
 import MainButton from '@/app/components/MainButton'
 import ReplyPost from '@/app/components/ReplyPost'
@@ -35,6 +37,8 @@ export default function ThreadPage() {
       "gpt-3.5-turbo"
     ]
 
+    const { imageHover, setImageHover, getThreadSettings } = useThread();
+
     const [thread, setThread] = useState({})
     const [postToggle, setPostToggle] = useState(false)
     const [replies, setReplies] = useState("")
@@ -56,6 +60,9 @@ export default function ThreadPage() {
       setGptModel(getGptSetting())
 
       getAnonId()
+
+      const settings = getThreadSettings();
+      setImageHover(settings['imageHover']);
     }, [])
 
     useEffect(() => {
@@ -63,6 +70,19 @@ export default function ThreadPage() {
         setGetYous(yous)
       }
     }, [thread])
+
+    function onChange(type) {
+      const settings = getThreadSettings();
+      
+      switch(type) {
+        case "imageHover":
+          setImageHover(!imageHover);
+          settings["imageHover"] = !imageHover;
+    
+          localStorage.setItem('threadSettings', JSON.stringify(settings));
+        break;
+      }
+    }
 
     function toggleForm() {
       setPostToggle(!postToggle)
@@ -109,6 +129,11 @@ export default function ThreadPage() {
 
       {!postToggle &&<div className='flex flex-col items-center justify-center mb-4 border-borderColor border-b-2'>
         <MainButton click={toggleForm} text='Post Reply'/>
+
+        <div className='flex justify-center font-bold'>
+          <Checkbox onChange={() => onChange("imageHover")} checked={imageHover} className='text-light'>Image Hover</Checkbox>
+        </div>
+
         <div className='flex mt-2.5 gap-2'>
           <p className='text-light font-bold'>Translate Thread:</p>
           <select className='text-sm text-center' onChange={(e) => changeGlobalLanguage(e)} value={globalLanguage}>
