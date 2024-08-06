@@ -5,11 +5,11 @@ export default function YoutubeEmbedRenderer(props) {
     const vidId = getId(props.link)
 
   function getId(link) {
-    if (link.startsWith('https://www.youtube.com')) {
+    if (link.includes('watch?v=')) {
       return link.split('=')[1]
     }
 
-    else if (link.startsWith('https://youtu.be/')) {
+    else if (link.includes('youtu.be/')) {
       return link.split('?').join('/').split('/')[3]
     }
   }

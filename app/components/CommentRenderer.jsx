@@ -50,7 +50,11 @@ function CommentRenderer({ thread, comment, setHighlight, postNum, yous, handleP
         }
       }
 
-      else if (word.startsWith('https://www.youtube.com') || word.startsWith('https://youtu.be/')) {
+      else if (word.includes('watch?v=') || word.includes('youtu.be/')) {
+        if (!word.includes('https://')) {
+          word = `https://${word}`;
+        }
+
         combineNormalWords(index, key)
 
         finalLine.push(<YoutubeEmbedRenderer key={`youtube-${index}-${key}`} index={index} link={word}/>)
