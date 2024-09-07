@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useThread } from '../hooks/useThread'
 import Image from 'next/image'
 import { changeGifToPng, convertBytesToKBorMB, getTranslatedText } from '../controller/controller'
 import CommentRenderer from './CommentRenderer'
@@ -25,14 +26,16 @@ export default function ReplyDisplay(props) {
         bytes = convertBytesToKBorMB(reply.fileData.bytes)
     }
 
-    const [imageEnlarge, setImageEnlarge] = useState(false)
-    const [isHighlighted, setIsHighlighted] = useState('') 
-    const [borderHighlight, setBorderHighlight] = useState('border-black')
-    const [replies, setReplies] = useState(null)
-    const [replyPreview, setReplyPreview] = useState(0)
-    const [comment, setComment] = useState(reply.comment)
-    const [selectedLanguage, setSelectedLanguage] = useState(languageOptions[0])
-    const [selectedGptModel, setSelectedGptModel] = useState('')
+    const { imageHover } = useThread();
+
+    const [imageEnlarge, setImageEnlarge] = useState(false);
+    const [isHighlighted, setIsHighlighted] = useState('');
+    const [borderHighlight, setBorderHighlight] = useState('border-black');
+    const [replies, setReplies] = useState(null);
+    const [replyPreview, setReplyPreview] = useState(0);
+    const [comment, setComment] = useState(reply.comment);
+    const [selectedLanguage, setSelectedLanguage] = useState(languageOptions[0]);
+    const [selectedGptModel, setSelectedGptModel] = useState('');
 
     useEffect(() => {
         if (borderHighlight !== 'border-black') {
