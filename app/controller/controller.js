@@ -1,5 +1,18 @@
 import axios from "axios";
 
+
+function makeId(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
 export function getCurrentDateTimeFormatted() {
   const currentDate = new Date();
 
@@ -140,18 +153,12 @@ export function changeGifToPng(imageUrl) {
   return newPng
 }
 
-export async function getAnonId() {
-  if (localStorage.getItem("ch: anon-id")) return localStorage.getItem("ch: anon-id")
+export function getAnonId() {
+  if (localStorage.getItem("ch: anon-id") && localStorage.getItem("ch: anon-id") != "[object Object]") return localStorage.getItem("ch: anon-id")
 
-  try{
-    const response = await axios.get("https://code-guard-server.vercel.app/generate")
-    console.log(response.data.message)
-    localStorage.setItem("ch: anon-id", response.data.message)
-    return response.data.message
-  } catch(error) {
-    console.error(error)
-    return "N/A"
-  }
+  const anonID = makeId(500);
+  localStorage.setItem("ch: anon-id", anonID);
+  return anonID;
 }
 
 export function youCheck(thread, arrowReply) {
